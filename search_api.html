@@ -1,0 +1,79 @@
+<!--
+  Copyright (c) 2011 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  use this file except in compliance with the License. You may obtain a copy of
+  the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  License for the specific language governing permissions and limitations under
+  the License.
+
+  To run this sample, replace YOUR API KEY with your application's API key.
+  It can be found at https://code.google.com/apis/console/?api=plus under API Access.
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <style>
+      #info {
+        border: 1px solid black;
+        padding: 0.25em;
+      }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</head>
+<body>
+    <p>Enter a short URL and click "Expand URL" to get the full URL.</p>
+    <label for="query">Short URL </label>
+    <input id="query" type="text" value="http://goo.gl/fbsS" />
+    <button id="fire">
+        Search
+    </button>
+    <div style="margin-top:0.5em;"><span id="info">Results</span></div>
+    <div id="messages">
+        Messages:<br />
+    </div>
+    <script>
+      // Enter the API key from the Google Develoepr Console - to handle any unauthenticated
+      // requests in the code.
+      // The provided key works for this sample only when run from
+      // https://google-api-javascript-client.googlecode.com/hg/samples/requestSample.html
+      // To use in your own application, replace this API key with your own.
+    function out(text) {
+        $('div#messages').append(text+'<br />') 
+    }
+    out('OUT: working')
+      
+      var apiKey = 'AIzaSyChJLHkrcdUPknA85oQwUHdVpssEmDzMfI';
+
+	  function dumpResult(js, raw){
+		out('dumpResult')
+		window.js = js
+		window.raw = raw
+		out(JSON.stringify(js))
+	  }
+	  
+      function makeRequest() {
+        out('makeRequest')
+		query = $('#query').val()
+		gapi.client.request({'path': 'youtube/v3/search',
+		'params': {'q': query, 'type': 'video', 'part': 'id'},
+		'callback': dumpResult			
+		})
+	  }
+      
+		function handleClientLoad(){
+			out('handleClientLoad...')
+			gapi.client.setApiKey(apiKey)
+			$('#fire').click(makeRequest)
+		}
+    </script>
+     <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+</body>
+</html>

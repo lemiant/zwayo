@@ -14,7 +14,7 @@ $query = "SELECT `id`, `party_name`, `host` FROM parties WHERE (`lat` BETWEEN ".
 
 $con = connect_to_mch();
 $result = mysqli_query($con, $query);
-$rows = mysqli_fetch_all($result);
+$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 print json_encode($rows);
 ?>

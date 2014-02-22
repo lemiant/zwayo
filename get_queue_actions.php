@@ -8,13 +8,27 @@
 require_once("mysql_utils.php");
 $con = connect_to_mch();
 
-$party_id = mysqli_real_escape_string($con, $_COOKIE['party_id']);
-if(isset($_POST['last'])) $last = mysqli_real_escape_string($con, $_POST['last']);
-else $last = 0;
+if(!empty($_POST['party_id'])){
+    $party_id = mysqli_real_escape_string($con, $_COOKIE['party_id']);
+    if(isset($_POST['last'])) $last = mysqli_real_escape_string($con, $_POST['last']);
+    else $last = 0;
 
-$query = "SELECT id, action, body FROM queue_actions WHERE `party_id`=$party_id AND `id` > $last";
-$result = mysqli_query($con, $query);
-$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $query = "SELECT id, action, body FROM queue_actions WHERE `party_id`=$party_id AND `id` > $last";
+    $result = mysqli_query($con, $query);
+    $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-print json_encode(array('result' => 'success', 'items' => $rows));
+    //Only set_active once
+    $output = array();
+    $s_a = False;
+    foreach($rows as $row){
+        if($row['action'] == 'set_active') $s_a = $row;
+        else $output[] = $row;
+    }
+    if($s_a) $output[] = $s_a;
+
+    print json_encode(array('result' => 'success', 'items' => $output));
+}
+else{
+    die($FAILURE);
+}
 ?>

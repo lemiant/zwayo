@@ -38,9 +38,9 @@
       <file leaf-file-name="new_party.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_party.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="56" selection-start="125" selection-end="125" vertical-scroll-proportion="0.055555556" vertical-offset="0" max-vertical-offset="918">
+            <state line="3" column="75" selection-start="144" selection-end="144" vertical-scroll-proportion="0.055555556" vertical-offset="0" max-vertical-offset="918">
               <folding>
-                <marker date="1393089034481" expanded="true" signature="83:126" placeholder="INSERT INTO ..." />
+                <marker date="1393089186752" expanded="true" signature="83:145" placeholder="INSERT INTO ..." />
               </folding>
             </state>
           </provider>
@@ -284,9 +284,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/new_party.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="56" selection-start="125" selection-end="125" vertical-scroll-proportion="0.055555556" vertical-offset="0" max-vertical-offset="918">
+        <state line="3" column="75" selection-start="144" selection-end="144" vertical-scroll-proportion="0.055555556" vertical-offset="0" max-vertical-offset="918">
           <folding>
-            <marker date="1393089034481" expanded="true" signature="83:126" placeholder="INSERT INTO ..." />
+            <marker date="1393089186752" expanded="true" signature="83:145" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>

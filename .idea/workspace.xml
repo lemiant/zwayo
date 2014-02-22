@@ -26,21 +26,28 @@
       <file leaf-file-name="mysql_utils.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysql_utils.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="1" selection-start="172" selection-end="172" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="323">
+            <state line="11" column="0" selection-start="173" selection-end="313" vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="442">
               <folding>
                 <element signature="e#6#86#0" expanded="true" />
-                <marker date="1393088616244" expanded="true" signature="24:45" placeholder="SELECT * FRO..parties..." />
+                <marker date="1393092820598" expanded="true" signature="24:45" placeholder="SELECT * FRO..parties..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="new_party.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/new_party.php">
+      <file leaf-file-name="join_party.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/join_party.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="75" selection-start="144" selection-end="144" vertical-scroll-proportion="0.055555556" vertical-offset="0" max-vertical-offset="918">
+            <state line="26" column="31" selection-start="1178" selection-end="1178" vertical-scroll-proportion="0.4814815" vertical-offset="0" max-vertical-offset="918">
               <folding>
-                <marker date="1393089186752" expanded="true" signature="83:145" placeholder="INSERT INTO ..." />
+                <marker date="1393093460845" expanded="true" signature="408:486" placeholder="INSERT INTO ..." />
+                <marker date="1393093460845" expanded="true" signature="408:486" placeholder="INSERT INTO ..." />
+                <marker date="1393093460845" expanded="true" signature="408:487" placeholder="INSERT INTO ..." />
+                <marker date="1393093460845" expanded="true" signature="408:555" placeholder="INSERT INTO ..." />
+                <marker date="1393093460845" expanded="true" signature="794:963" placeholder="SELECT id FR..parties..." />
+                <marker date="1393093460845" expanded="true" signature="794:837" placeholder="SELECT id FR..parties..." />
+                <marker date="1393093460845" expanded="true" signature="794:837" placeholder="SELECT id FR..parties..." />
+                <marker date="1393093460845" expanded="true" signature="794:837" placeholder="SELECT id FR..parties..." />
               </folding>
             </state>
           </provider>
@@ -49,7 +56,7 @@
       <file leaf-file-name="mysql_db.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testing/mysql_db.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="1" selection-start="6" selection-end="316" vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="357">
+            <state line="13" column="18" selection-start="314" selection-end="314" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="357">
               <folding>
                 <marker date="1393087135210" expanded="true" signature="191:212" placeholder="SELECT * FRO..parties..." />
               </folding>
@@ -72,8 +79,8 @@
       <list>
         <option value="$PROJECT_DIR$/mysqk_db.php" />
         <option value="$PROJECT_DIR$/mysql_db.php" />
-        <option value="$PROJECT_DIR$/mysql_utils.php" />
         <option value="$PROJECT_DIR$/testing/new_party.php" />
+        <option value="$PROJECT_DIR$/mysql_utils.php" />
         <option value="$PROJECT_DIR$/new_party.php" />
       </list>
     </option>
@@ -159,6 +166,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="SearchEverywhereHistory" value="" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -210,14 +218,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-10" y="-10" width="1858" height="1100" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18770403" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18770403" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -265,7 +273,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testing/mysql_db.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="1" selection-start="6" selection-end="316" vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="357">
+        <state line="13" column="18" selection-start="314" selection-end="314" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="357">
           <folding>
             <marker date="1393087135210" expanded="true" signature="191:212" placeholder="SELECT * FRO..parties..." />
           </folding>
@@ -274,19 +282,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysql_utils.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="1" selection-start="172" selection-end="172" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="323">
+        <state line="11" column="0" selection-start="173" selection-end="313" vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="442">
           <folding>
             <element signature="e#6#86#0" expanded="true" />
-            <marker date="1393088616244" expanded="true" signature="24:45" placeholder="SELECT * FRO..parties..." />
+            <marker date="1393092820598" expanded="true" signature="24:45" placeholder="SELECT * FRO..parties..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_party.php">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_4.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="75" selection-start="144" selection-end="144" vertical-scroll-proportion="0.055555556" vertical-offset="0" max-vertical-offset="918">
+        <state line="561" column="9" selection-start="18895" selection-end="18895" vertical-scroll-proportion="0.34204793" vertical-offset="9223" max-vertical-offset="18496">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/join_party.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="31" selection-start="1178" selection-end="1178" vertical-scroll-proportion="0.4814815" vertical-offset="0" max-vertical-offset="918">
           <folding>
-            <marker date="1393089186752" expanded="true" signature="83:145" placeholder="INSERT INTO ..." />
+            <marker date="1393093460845" expanded="true" signature="408:486" placeholder="INSERT INTO ..." />
+            <marker date="1393093460845" expanded="true" signature="408:486" placeholder="INSERT INTO ..." />
+            <marker date="1393093460845" expanded="true" signature="408:487" placeholder="INSERT INTO ..." />
+            <marker date="1393093460845" expanded="true" signature="408:555" placeholder="INSERT INTO ..." />
+            <marker date="1393093460845" expanded="true" signature="794:963" placeholder="SELECT id FR..parties..." />
+            <marker date="1393093460845" expanded="true" signature="794:837" placeholder="SELECT id FR..parties..." />
+            <marker date="1393093460845" expanded="true" signature="794:837" placeholder="SELECT id FR..parties..." />
+            <marker date="1393093460845" expanded="true" signature="794:837" placeholder="SELECT id FR..parties..." />
           </folding>
         </state>
       </provider>

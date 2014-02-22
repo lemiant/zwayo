@@ -7,13 +7,13 @@
  */
 
 function connect_to_mch(){
-    $con = mysqli_connect("localhost","root","","mch");
+    return mysqli_connect("localhost","root","","mch");
 }
-function rand_letter($num){
+function rand_letter($num=1){
     $key = "";
-    for (int $i=0; $i<$num; $i++)
+    for ($i=0; $i<$num; $i++)
 	{
-        $key .=chr(97+ mt_rand(0,25));
+        $key .= chr(97+ mt_rand(0,25));
     }
 	return $key;
 }

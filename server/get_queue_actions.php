@@ -8,7 +8,7 @@
 require_once("mysql_utils.php");
 $con = connect_to_mch();
 
-if(!empty($_POST['party_id'])){
+if(!empty($_COOKIE['party_id'])){
     $party_id = mysqli_real_escape_string($con, $_COOKIE['party_id']);
     if(isset($_POST['last'])) $last = mysqli_real_escape_string($con, $_POST['last']);
     else $last = 0;

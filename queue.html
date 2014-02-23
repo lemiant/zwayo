@@ -1,11 +1,24 @@
 <html>
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'>
+    <script type="text/javascript">
+        WebFontConfig = {
+            google: { families: [ 'Exo+2::latin' ] }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+                    '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })(); </script>
+</head>
 <body>
 <style type="text/css">
     body{
-        font: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-    li.active{
-        background-color: #8A360F;
+        font-family: Exo 2, sans-serif;
     }
     p.song_title{
         color: #cccccc;
@@ -36,19 +49,55 @@
         margin: 0;
     }
     div.item{
-        height: 70px;
-        padding: 5px;
+        height: 60px;
+        margin: 5px;
     }
     ul{
         padding: 0;
         margin: 0
+    }
+
+    li.active{
+        background-color: #8A360F;
+    }
+    #queue.host li.active{
+        height: 170px;
+    }
+    #queue.host li.active iframe{
+        margin:5px 15;
     }
 </style>
 <ul id="queue"></ul>
 <input type="submit" value="play" id="play" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
-    active_entry = false;
+    function getCookie(name) {
+        var dc = document.cookie;
+        var prefix = name + "=";
+        var begin = dc.indexOf("; " + prefix);
+        if (begin == -1) {
+            begin = dc.indexOf(prefix);
+            if (begin != 0) return null;
+        }
+        else
+        {
+            begin += 2;
+            var end = document.cookie.indexOf(";", begin);
+            if (end == -1) {
+                end = dc.length;
+            }
+        }
+        return unescape(dc.substring(begin + prefix.length, end));
+    }
+</script>
+
+<script type="text/javascript">
+    if(getCookie("admin_key")){
+        IS_HOST = true;
+        $('#queue').addClass("host")
+    }
+    else IS_HOST = false
+    active_entry = false
     last_update = 0
     function apply(rule, list){
         body = $.parseJSON(rule.body)
@@ -64,12 +113,13 @@
                     '</div>'+
                 '</li>')
         }
-        else if(rule.action == 'set_active'){
-            console.log("SET_ACTIVE")
-            console.log(body)
-            $('li.active').removeClass('active')
-            $('div#'+body.videoId).parent().addClass('active')
+        else if(rule.action == 'set_active' && !IS_HOST){
+            set_active(body.videoId)
         }
+    }
+    function set_active(videoId){
+        $('li.active').removeClass('active')
+        $('div#'+videoId).parent().addClass('active')
     }
     function truncate(str, size){
         if(str.length > size){
@@ -84,11 +134,11 @@
         div = selector.children('div.item')
         div.hide()
         videoId = div.get(0).id
-        set_active(videoId)
+        send_set_active(videoId)
         selector.prepend('<div id="player"></div>')
         player = new YT.Player('player', {
-            height: '390',
-            width: '640',
+            height: '160',
+            width: '200',
             videoId: videoId,
             events: {
                 onReady: onPlayerReady,
@@ -111,17 +161,18 @@
         }
     }
 
-    function set_active(videoId){
+    function send_set_active(videoId){
         $.ajax({
             url: 'server/set_queue_action.php',
             type: 'post',
             data: {action: 'set_active',
                 body: {videoId: videoId}}
         })
+        set_active(videoId)
     }
 
     function update_queue(js, status){
-//        console.log(js)
+        console.log(js)
         if(status == "success" && js.result == "success"){
             queue = $('#queue')
             for(i=0; i<js.items.length; i++){
@@ -129,7 +180,7 @@
             }
             if(js.items.length > 0) last_update = js.items[js.items.length-1].id
         }
-//        console.log("set_timeout")
+        console.log("set_timeout")
         setTimeout("get_queue_actions()", 2000)
     }
 

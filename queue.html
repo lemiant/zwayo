@@ -1,12 +1,21 @@
 <html>
 <body>
-<input type="submit" value="play" id="play" />
 <style type="text/css">
+    body{
+        font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
     li.active{
         background-color: lightcyan;
     }
-    p{
+    p.song_title{
         color: #cccccc;
+        font-size: 12px;
+        margin: 3px;
+    }
+    p.song_guest{
+        color: #cccccc;
+        font-size: 10px;
+        margin: 5px 0 2px 0;
     }
     html, body{
         padding: 0;
@@ -36,6 +45,7 @@
     }
 </style>
 <ul id="queue"></ul>
+<input type="submit" value="play" id="play" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
     active_entry = false;
@@ -49,8 +59,8 @@
                 '<div class="item" id="'+body.videoId+'">'+
                     //'<img class="handle"'+
                     '<img src="'+body.thumb+'">'+
-                    '<p class=”songTitle”>"'+body.title+'"</p>'+
-                    '<p class=”songGuest”>"'+body.guest+'"</p>'+
+                    '<p class="song_title">'+truncate(body.title, 60)+'</p>'+
+                    '<p class="song_guest">Added by '+truncate(body.guest, 30)+'</p>'+
                     '</div>'+
                 '</li>')
         }
@@ -60,6 +70,12 @@
             $('li.active').removeClass('active')
             $('div#'+body.videoId).parent().addClass('active')
         }
+    }
+    function truncate(str, size){
+        if(str.length > size){
+            return str.slice(0,size-4)+"..."
+        }
+        return str
     }
 
     var player

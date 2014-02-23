@@ -1,0 +1,116 @@
+<body>
+
+<!-- Start of first page -->
+<div data-role="page" data-theme="b">
+    <div role="main" class="ui-content">
+        <ul id="autocomplete_list" data-role="listview" data-inset="true" data-filter="true"
+            data-filter-placeholder="Search..."></ul>
+        <div data-role="page" id="guess" data-theme="b">
+            <div role="main" class="ui-content">
+                    <a href="#" id="guess_link" class="ui-btn ui-btn-right ui-btn-b ui-btn-icon-notext ui-icon-delete ui-corner-all">Close</a>
+            </div><!-- /content -->
+        </div>
+    </div><!-- /content -->
+</div><!-- /page -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.0/jquery.mobile.min.js"></script>
+
+<script>
+    var apiKey = 'AIzaSyChJLHkrcdUPknA85oQwUHdVpssEmDzMfI';
+    var list = $('#autocomplete_list')
+    var active_guess = ''
+    var guesses = []
+
+    function update_autocomplete(result, status){
+        if(status == 'success'){
+            list.empty()
+            suggestions = result[1]
+            window.s = suggestions
+            for(i=0; i<Math.min(3, suggestions.length); i++){
+                list.append('<a href="#"><li>'+suggestions[i][0]+"</li></a>")
+            }
+            list.children("a").bind("click", set_search)
+        }
+    }
+
+    function set_search(){
+        window.last = this
+        console.log(last)
+        $('#search_bar').val( $(this).children('li')[0].innerHTML )
+        $('#search_bar').trigger('input')
+    }
+
+    function update_guess(js){
+        console.log('update_guess')
+        guesses = js.items
+        render_guess(guesses[0])
+    }
+    function render_guess(entry){
+        window.e = entry
+        console.log(entry)
+        console.log('render_guess')
+        if(entry != undefined){
+            if(active_guess != entry.id.videoId){
+                $('#guess').empty()
+                $('#guess_wrapper').show()
+                active_guess = entry.id.videoId
+                thumb = entry.snippet.thumbnails.medium.url
+                if(thumb == undefined) thumb = entry.snippet.thumbnails.default.url
+                $('#guess').append('<input type="hidden" value="'+entry.id.videoId+'"><img width="250" src="'+thumb+'"><p>'+entry.snippet.title+'</p>')
+            }
+        }
+        else $('#guess_wrapper').hide()
+    }
+
+    var carousel_index = 0;
+    function move_carousel(amt){
+        console.log(amt)
+        carousel_index += amt
+        if(carousel_index > guesses.length-1) carousel_index = guesses.length-1
+        else if(carousel_index < 0) carousel_index = 0;
+        render_guess(guesses[carousel_index])
+    }
+
+    function autocomplete(){
+        gapi.client.setApiKey(apiKey)
+        query = $(this).val();
+        if(query.length >= 4){
+            $.ajax({
+                url: "http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q="+encodeURIComponent(query)+"&key="+apiKey+"&format=5&alt=json&callback=?",
+                dataType: 'jsonp',
+                success: update_autocomplete
+            })
+        }
+        else list.empty()
+        if(query.length >= 4){
+            gapi.client.request({
+                path: 'youtube/v3/search',
+                params: {
+                    q: query,
+                    type: 'video',
+                    part: 'id,snippet',
+                    fields: 'items(id(videoId),snippet(thumbnails,title))'
+                },
+                callback: update_guess
+            })
+        }
+        else $('#guess_wrapper').hide()
+    }
+
+    function add_video_to_queue(){
+        alert("add "+active_guess)
+    }
+
+    function onLoad(){
+        $("#search_bar").bind("input", autocomplete)
+        $('#left_arrow').bind("click", function(){ move_carousel(-1) })
+        $('#right_arrow').bind("click", function(){ move_carousel(1) })
+        $('#guess_link').bind("click", add_video_to_queue)
+        console.log('load')
+    }
+
+</script>
+<script src="https://apis.google.com/js/client.js?onload=onLoad"></script>
+</body>
+</html>

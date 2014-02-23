@@ -18,7 +18,7 @@ function check_party($con, $party_id){
     else return false;
 }
 function check_admin_key($con, $party_id, $admin_key){
-    $query = "SELECT admin_key FROM parties WHERE id=$party_id";
+    $query = "SELECT admin_key FROM parties WHERE id=$party_id" . ";";
     $result= mysqli_query($con, $query);
 
     if($row= mysqli_fetch_row($result,MYSQLI_ASSOC)){

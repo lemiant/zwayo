@@ -8,7 +8,7 @@ if($_POST['action']=="add" or
   ($_POST['action'] == 'set_active' and !empty($_POST['admin_key']) and check_admin_key($con, $party_id, $_POST['admin_key']))){
     $action = mysqli_real_escape_string($con, $_POST['action']);
     $body = mysqli_real_escape_string($con, $_POST['body']);
-    $query = "INSERT INTO queue_actions (`party_id`,`action`,`body`) VALUES ($party_id, '$action', '$body')";
+    $query = "INSERT INTO queue_actions (`party_id`,`action`,`body`) VALUES ($party_id, '$action', '$body');";
     mysqli_query($con, $query);
     mysqli_close($con);
     print json_encode(array("result" => "success"));

@@ -13,7 +13,7 @@ if(!empty($_COOKIE['party_id'])){
     if(isset($_POST['last'])) $last = mysqli_real_escape_string($con, $_POST['last']);
     else $last = 0;
 
-    $query = "SELECT id, action, body FROM queue_actions WHERE `party_id`=$party_id AND `id` > $last";
+    $query = "SELECT id, action, body FROM queue_actions WHERE `party_id`=$party_id AND `id` > $last ORDER BY id ASC";
     $result = mysqli_query($con, $query);
     $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 

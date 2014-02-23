@@ -37,5 +37,5 @@ function rand_letter($num=1){
 	return $key;
 }
 
-$FAILURE = "dd";
+$FAILURE = json_encode(array("result" => "failure"));
 ?>

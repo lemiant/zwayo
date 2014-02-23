@@ -4,36 +4,79 @@
 <head>
     <title>Search</title>
     <style>
-        body
-        {
-            background-color: Black;
-        }
     </style>
 </head>
 <body>
-<input id="search_bar" type="text">
 <style>
     #search_bar{
-        width: 90%; height: 5%;
-        background-color: deepskyblue;
-        color: white;
-        font-family: Jokerman;
+        width: 93%;
+        background-color: #f2f2f2;
+        color: black;
+        font-family: veranda, sans-serif;
         font-size:15px;
-        border: 3px solid white;
+        border: 3px solid #111111;
         border-radius: 20px;
-        margin-top:5%;
-        margin-left:5%;
-        margin-right:5%;
+        margin: auto;
+        padding: 0 7px;
+        position: relative;
+        display: block;
+        z-index: 1;
+    }
+
+    body
+    {
+        background-color: #333333;
+    }
+    html, body{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    ul#autocomplete_list{
+        margin: -13px auto 0;
+        padding: 12px 0 0 0;
+        width: 94%;
+        background-color: #f2f2f2;
+        border-bottom: 1px solid #111111;
+        border-left: 1px solid #111111;
+        border-right: 1px solid #111111;
+        position: relative;
+        z-index: 0;
+    }
+    ul#autocomplete_list li{
+        width: 100%;
+        border-bottom: 1px solid #111111;
+        border-left: 1px solid #111111;
+        border-right: 1px solid #111111;
+        list-style-type: none;
+    }
+    ul#autocomplete_list p{
+        padding: 4px 4px;
+        margin: 0;
+    }
+    ul a:link, ul a:hover, ul a:visited, ul a:active{
+        text-decoration: none;
+        color: black;
+    }
+    div#search_container{
+        height: 25px;
+        position: relative;
+        width: 90%;
+        margin: 10px auto 0;
+        display: block;
     }
 </style>
 
-
-<ul id="autocomplete_list"></ul>
-<div id="guess_wrapper" style="display: none">
-    <div style="float: left; height: 100%"><a href="#" id="left_arrow"><img src="imgs/left-arrow.png" height="40" /></a></div>
-    <div style="float: right; height: 100%"><a href="#" id="right_arrow"><img src="imgs/right-arrow.png" height="40" /></a></div>
-    <a href="#" id="guess_link"><div id="guess"></div></a>
+<div id="search_container">
+    <input id="search_bar" type="text">
+    <ul id="autocomplete_list"></ul>
 </div>
+<div id="queue"></div>
+<!--<div id="guess_wrapper" style="display: none">-->
+    <!--<div style="float: left; height: 100%"><a href="#" id="left_arrow"><img src="imgs/left-arrow.png" height="40" /></a></div>-->
+    <!--<div style="float: right; height: 100%"><a href="#" id="right_arrow"><img src="imgs/right-arrow.png" height="40" /></a></div>-->
+    <!--<a href="#" id="guess_link"><div id="guess"></div></a>-->
+<!--</div>-->
 <style type="text/css">
     #guess_wrapper{
         height: 80%;
@@ -56,16 +99,15 @@ function update_autocomplete(result, status){
         suggestions = result[1]
         window.s = suggestions
         for(i=0; i<Math.min(3, suggestions.length); i++){
-            list.append('<a href="#"><ul>'+suggestions[i][0]+"</ul></a>")
+            list.append('<a href="#"><li><p>'+suggestions[i][0]+"</p></li></a>")
         }
         list.children("a").bind("click", set_search)
     }
 }
 
 function set_search(){
-    window.last = this
-    console.log(last)
-    $('#search_bar').val( $(this).children('ul')[0].innerHTML )
+    console.log($(this).find('p'))
+    $('#search_bar').val( $(this).find('p').get(0).innerHTML )
     $('#search_bar').trigger('input')
 }
 
@@ -74,30 +116,27 @@ function update_guess(js){
     guesses = js.items
     render_guess(guesses[0])
 }
-function render_guess(entry){
-    window.e = entry
-    console.log(entry)
-    console.log('render_guess')
-    if(entry != undefined){
-        if(active_guess != entry.id.videoId){
-            $('#guess').empty()
-            $('#guess_wrapper').show()
-            active_guess = entry.id.videoId
-            thumb = entry.snippet.thumbnails.medium.url
-            if(thumb == undefined) thumb = entry.snippet.thumbnails.default.url
-            $('#guess').append('<input type="hidden" value="'+entry.id.videoId+'"><img width="250" src="'+thumb+'"><p>'+entry.snippet.title+'</p>')
-        }
-    }
-    else $('#guess_wrapper').hide()
-}
+function render_page(result){ //This could be much more efficient (oh well :-)
+    window.r = result
+    console.log(result)
+    console.log('render_result')
 
-var carousel_index = 0;
-function move_carousel(amt){
-    console.log(amt)
-    carousel_index += amt
-    if(carousel_index > guesses.length-1) carousel_index = guesses.length-1
-    else if(carousel_index < 0) carousel_index = 0;
-    render_guess(guesses[carousel_index])
+    $('#queue').empty()
+
+    list.append('<li class="container">'+
+            '<div class="item" id="'+body.videoId+'">'+
+        //'<img class="handle"'+
+            '<img src="'+body.thumb+'">'+
+            '<p class="song_title">'+truncate(body.title, 60)+'</p>'+
+            '<p class="song_guest">Added by '+truncate(body.guest, 30)+'</p>'+
+            '</div>'+
+            '</li>')
+    $('#guess_wrapper').show()
+    active_guess = entry.id.videoId
+    thumb = entry.snippet.thumbnails.medium.url
+    if(thumb == undefined) thumb = entry.snippet.thumbnails.default.url
+    $('#guess').append('<input type="hidden" value="'+entry.id.videoId+'"><img width="250" src="'+thumb+'"><p>'+entry.snippet.title+'</p>')
+
 }
 
 function autocomplete(){
@@ -111,7 +150,7 @@ function autocomplete(){
         })
     }
     else list.empty()
-    if(query.length >= 8){
+    if(query.length >= 4){
         gapi.client.request({
             path: 'youtube/v3/search',
             params: {
@@ -120,7 +159,7 @@ function autocomplete(){
                 part: 'id,snippet',
                 fields: 'items(id(videoId),snippet(thumbnails,title))'
             },
-            callback: update_guess
+            callback: render_page
         })
     }
     else $('#guess_wrapper').hide()
@@ -146,8 +185,6 @@ function add_video_to_queue(){
 
 function onLoad(){
     $("#search_bar").bind("input", autocomplete)
-    $('#left_arrow').bind("click", function(){ move_carousel(-1) })
-    $('#right_arrow').bind("click", function(){ move_carousel(1) })
     $('#guess_link').bind("click", add_video_to_queue)
     console.log('load')
 }

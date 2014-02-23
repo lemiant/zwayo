@@ -9,7 +9,7 @@
 function connect_to_mch(){
     return mysqli_connect("localhost","root","","mch");
 }
-function check_party($con, $party_id){
+function check_party_id($con, $party_id){
     $query = "SELECT id FROM parties WHERE id='$party_id'";
     $result = mysqli_query($con, $query);
     if(mysqli_fetch_row($result)){
@@ -21,7 +21,7 @@ function check_admin_key($con, $party_id, $admin_key){
     $query = "SELECT admin_key FROM parties WHERE id=$party_id" . ";";
     $result= mysqli_query($con, $query);
 
-    if($row= mysqli_fetch_row($result,MYSQLI_ASSOC)){
+    if($row = mysqli_fetch_assoc($result)){
         if ($row["admin_key"]== $admin_key){
             return true;
         }
@@ -37,5 +37,5 @@ function rand_letter($num=1){
 	return $key;
 }
 
-$FAILLURE = "dd";
+$FAILURE = "dd";
 ?>

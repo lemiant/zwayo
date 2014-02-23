@@ -1,0 +1,145 @@
+<html>
+<body>
+<input type="submit" value="play" id="play" />
+<style type="text/css">
+    li.active{
+        background-color: lightcyan;
+    }
+    p{
+        color: #cccccc;
+    }
+    html, body{
+        padding: 0;
+        margin: 0;
+    }
+    li img{
+        float: left;
+        height: 60px;
+        margin: 0 10px;
+    }
+    li{
+        border-top: solid black 1px;
+        border-bottom: solid black 1px;
+        width: 100%;
+        background-color: #333333;
+        height: 70px;
+        padding: 0;
+        margin: 0;
+    }
+    div.item{
+        height: 70px;
+        padding: 5px;
+    }
+    ul{
+        padding: 0;
+        margin: 0
+    }
+</style>
+<ul id="queue"></ul>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+    active_entry = false;
+    last_update = 0
+    function apply(rule, list){
+        body = $.parseJSON(rule.body)
+        if(rule.action == 'add'){
+            console.log(body)
+            console.log(list.get()[0])
+            list.append('<li class="container">'+
+                '<div class="item" id="'+body.videoId+'">'+
+                    //'<img class="handle"'+
+                    '<img src="'+body.thumb+'">'+
+                    '<p class=”songTitle”>"'+body.title+'"</p>'+
+                    '<p class=”songGuest”>"'+body.guest+'"</p>'+
+                    '</div>'+
+                '</li>')
+        }
+        else if(rule.action == 'set_active'){
+            console.log("SET_ACTIVE")
+            console.log(body)
+            $('li.active').removeClass('active')
+            $('div#'+body.videoId).parent().addClass('active')
+        }
+    }
+
+    var player
+    function init_play(selector){
+//        console.log(selector.get(0))
+        div = selector.children('div.item')
+        div.hide()
+        videoId = div.get(0).id
+        set_active(videoId)
+        selector.prepend('<div id="player"></div>')
+        player = new YT.Player('player', {
+            height: '390',
+            width: '640',
+            videoId: videoId,
+            events: {
+                onReady: onPlayerReady,
+                onStateChange: onStateChange
+            }
+        });
+    }
+    function onPlayerReady(e){
+        e.target.playVideo();
+    }
+    function onStateChange(e){
+//        console.log(e)
+        if(e.data == 0){
+            container = $(e.target.a).parent()
+            container.children("iframe").remove()
+            container.children("div.item").show()
+            if(typeof container.next() != "undefined"){
+                init_play(container.next())
+            }
+        }
+    }
+
+    function set_active(videoId){
+        $.ajax({
+            url: 'server/set_queue_action.php',
+            type: 'post',
+            data: {action: 'set_active',
+                body: {videoId: videoId}}
+        })
+    }
+
+    function update_queue(js, status){
+//        console.log(js)
+        if(status == "success" && js.result == "success"){
+            queue = $('#queue')
+            for(i=0; i<js.items.length; i++){
+                apply(js.items[i], queue)
+            }
+            if(js.items.length > 0) last_update = js.items[js.items.length-1].id
+        }
+//        console.log("set_timeout")
+        setTimeout("get_queue_actions()", 2000)
+    }
+
+    function get_queue_actions(){
+        $.ajax({
+            url: "server/get_queue_actions.php",
+            dataType: 'json',
+            type: 'post',
+            data: {last: last_update},
+            success: update_queue
+        })
+    }
+    console.log('load')
+
+
+    get_queue_actions()
+
+    //Load youtube iframe API
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    function onYouTubeIframeAPIReady() {
+        $('#play').bind('click', function(){init_play($('#queue').children().first())})
+    }
+</script>
+</body>
+</html>

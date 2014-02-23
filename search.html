@@ -54,7 +54,7 @@
         padding: 4px 4px;
         margin: 0;
     }
-    ul a:link, ul a:hover, ul a:visited, ul a:active{
+    a:link, ul a:hover, ul a:visited, ul a:active{
         text-decoration: none;
         color: black;
     }
@@ -64,6 +64,35 @@
         width: 90%;
         margin: 10px auto 0;
         display: block;
+    }
+
+    #queue li img{
+        float: left;
+        height: 60px;
+        margin: 0 10px;
+    }
+    #queue li{
+        border-top: solid black 1px;
+        border-bottom: solid black 1px;
+        width: 100%;
+        background-color: #333333;
+        list-style-type: none;
+        height: 70px;
+        padding: 0;
+        margin: 0;
+    }
+    #queue div.item{
+        height: 60px;
+        margin: 5px;
+    }
+    #queue {
+        padding: 0;
+        margin: 0
+    }
+    p.song_title{
+        color: #cccccc;
+        font-size: 13px;
+        margin: 3px;
     }
 </style>
 
@@ -77,15 +106,7 @@
     <!--<div style="float: right; height: 100%"><a href="#" id="right_arrow"><img src="imgs/right-arrow.png" height="40" /></a></div>-->
     <!--<a href="#" id="guess_link"><div id="guess"></div></a>-->
 <!--</div>-->
-<style type="text/css">
-    #guess_wrapper{
-        height: 80%;
-        width: 90%;
-        align-content: center;
-        margin-left: 5%;
-        margin-right: 5%;
-    }
-</style>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
 var apiKey = 'AIzaSyChJLHkrcdUPknA85oQwUHdVpssEmDzMfI';
@@ -108,7 +129,7 @@ function update_autocomplete(result, status){
 function set_search(){
     console.log($(this).find('p'))
     $('#search_bar').val( $(this).find('p').get(0).innerHTML )
-    $('#search_bar').trigger('input')
+    autocomplete.call($('#search_bar').get(0), false)
 }
 
 function update_guess(js){
@@ -122,27 +143,38 @@ function render_page(result){ //This could be much more efficient (oh well :-)
     console.log('render_result')
 
     $('#queue').empty()
-
-    list.append('<li class="container">'+
-            '<div class="item" id="'+body.videoId+'">'+
-        //'<img class="handle"'+
-            '<img src="'+body.thumb+'">'+
-            '<p class="song_title">'+truncate(body.title, 60)+'</p>'+
-            '<p class="song_guest">Added by '+truncate(body.guest, 30)+'</p>'+
-            '</div>'+
-            '</li>')
-    $('#guess_wrapper').show()
-    active_guess = entry.id.videoId
-    thumb = entry.snippet.thumbnails.medium.url
-    if(thumb == undefined) thumb = entry.snippet.thumbnails.default.url
-    $('#guess').append('<input type="hidden" value="'+entry.id.videoId+'"><img width="250" src="'+thumb+'"><p>'+entry.snippet.title+'</p>')
-
+    if(typeof result.items != "undefined"){
+        for(i=0; i<result.items.length; i++){
+            row = result.items[i]
+            if(typeof row.snippet.thumbnails.small != 'undefined')thumb = row.snippet.thumbnails.small.url
+            else if(typeof row.snippet.thumbnails.default != 'undefined')thumb = row.snippet.thumbnails.default.url
+            else thumb = ""
+            $('#queue').append('<a href="#"><li class="container">'+
+                    '<div class="item" id="'+row.id.videoId+'">'+
+                //'<img class="handle"'+
+                    '<img src="'+thumb+'">'+
+                    '<p class="song_title">'+truncate(row.snippet.title, 90)+'</p>'+
+                    '</div>'+
+                    '</li></a>')
+        }
+        $('#queue').children('a').bind('click', add_video_to_queue)
+    }
+//        active_guess = entry.id.videoId
+//        if(thumb == undefined) thumb = entry.snippet.thumbnails.default.url
+//        $('#guess').append('<input type="hidden" value="'+entry.id.videoId+'"><img width="250" src="'+thumb+'"><p>'+entry.snippet.title+'</p>')
+}
+function truncate(str, size){
+    if(str.length > size){
+        return str.slice(0,size-4)+"..."
+    }
+    return str
 }
 
-function autocomplete(){
+function autocomplete(suggest){
+    if(suggest == undefined) suggest = true;
     gapi.client.setApiKey(apiKey)
     query = $(this).val();
-    if(query.length >= 4){
+    if(query.length >= 4 && suggest){
         $.ajax({
             url: "http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q="+encodeURIComponent(query)+"&key="+apiKey+"&format=5&alt=json&callback=?",
             dataType: 'jsonp',
@@ -157,6 +189,7 @@ function autocomplete(){
                 q: query,
                 type: 'video',
                 part: 'id,snippet',
+                maxResults: 10,
                 fields: 'items(id(videoId),snippet(thumbnails,title))'
             },
             callback: render_page
@@ -166,13 +199,12 @@ function autocomplete(){
 }
 
 function add_video_to_queue(){
-    current = guesses[carousel_index]
-    console.log(current)
+    div = $(this).find('div.item')
+    console.log(this)
     body = {}
-    body.videoId = current.id.videoId
-    body.title = current.snippet.title
-    if(typeof current.snippet.thumbnails.small != 'undefined') body.thumb = current.snippet.thumbnails.small.url
-    else if(typeof current.snippet.thumbnails.default != 'undefined') body.thumb = current.snippet.thumbnails.default.url
+    body.videoId = div.get(0).id
+    body.title = div.children('p.song_title').get(0).innerHTML
+    body.thumb = div.children('img').get(0).src
     console.log(body)
     $.ajax({
         url: 'server/set_queue_action.php',

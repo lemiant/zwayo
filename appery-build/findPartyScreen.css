@@ -1,0 +1,50 @@
+
+/* Define default spinner */
+.ui-icon-loading {
+	background: url("files/resources/lib/jquerymobile/1.4.0/images/ajax-loader.gif") repeat scroll 0 0 / 46px 46px transparent!important;
+}
+/* startContainer */
+.ui-content.findPartyScreen_startContainer {
+	padding: 15px 15px 15px 15px;
+}
+/* partyCollapsibleSet */
+.findPartyScreen_partyCollapsibleSet {
+	margin: 0px 0 0px 0;
+}
+.findPartyScreen_partyCollapsibleSet .ui-collapsible-content {
+	margin: 0 -15px 0 -15px;
+}
+/* newPartyCollapseBlock */
+.findPartyScreen_newPartyCollapseBlock {
+
+}
+.findPartyScreen_newPartyCollapseBlock .ui-collapsible-content {
+	padding: 10px 15px 10px 15px;
+}
+/* newPartyInsertName */
+.findPartyScreen_newPartyInsertName {
+	margin: 0px 0px 0px 0px;
+}
+/* newPartyInsert */
+.findPartyScreen_newPartyInsert {
+	margin: 4px 0px 4px 0px;
+}
+/* partyCollapseBlock */
+.findPartyScreen_partyCollapseBlock {
+
+}
+.findPartyScreen_partyCollapseBlock .ui-collapsible-content {
+	padding: 10px 15px 10px 15px;
+}
+/* partyInsertName */
+.findPartyScreen_partyInsertName {
+	margin: 0px 0px 0px 0px;
+}
+/* partyInsertName_nameInsertField */
+.findPartyScreen_partyInsertName_nameInsertField {
+	margin: 0px 0px 0px 0px;
+}
+/* mobilefooter1 */
+.findPartyScreen_mobilefooter1 {
+	min-height:38px;
+}

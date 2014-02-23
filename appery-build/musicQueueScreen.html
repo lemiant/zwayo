@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>
+            musicQueueScreen
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="initial-scale=1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link href="files/resources/lib/theme/jqm/jqm.css" rel="stylesheet" />
+        <link href="files/resources/lib/jquerymobile/1.4.0/jquery.mobile.structure-1.4.0.css"
+        rel="stylesheet" />
+        <script type="text/javascript" src="files/resources/lib/store/json2.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquery/jquery-1.9.1.js">
+        </script>
+        <script type="text/javascript">
+                    $(document).bind("mobileinit", function()
+            {
+                if (navigator.userAgent.toLowerCase().indexOf("android") != -1)
+                {
+                    $.mobile.defaultPageTransition = 'none';
+                    $.mobile.defaultDialogTransition = 'none';
+                }
+                if (navigator.userAgent.toLowerCase().indexOf("msie") != -1)
+                {
+                    $.mobile.allowCrossDomainPages = true;
+                    $.support.cors = true;
+                }
+            });
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquerymobile/1.4.0/jquery.mobile-1.4.0.js">
+        </script>
+        <script type="text/javascript" src="files/resources/js/mobilebase.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/event/customEventHandler.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/sha1.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/oauth.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/contexts.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/jsonpath.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/jquery.xml2json.min.js">
+        </script>
+        <link href="files/resources/lib/exadel-carousel/jquery.mobile.carousel.css" rel="stylesheet"
+        type="text/css" />
+        <script type="text/javascript" src="files/resources/lib/exadel-carousel/carousel.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/appery.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/get_target_platform.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/cordova.js">
+        </script>
+        <link href="files/resources/css/mobilebase.css" rel="stylesheet" type="text/css"
+        />
+    </head>
+    
+    <body>
+        <script language="JavaScript" type="text/javascript">
+                if (navigator.userAgent.match(/iP/i))
+        {
+            $(window).bind('orientationchange', function(event)
+            {
+                $('meta[name="viewport"]').attr('content', 'initial-scale=1.0,maximum-scale=1.0, ' + ((window.orientation == 90 || window.orientation == -90 || window.orientation == 270) ? "height=device-width,width=device-height" : "height=device-height,width=device-width"));
+            }).trigger('orientationchange');
+        }
+        $("body").bind("swipeleft", function(e)
+        {
+            e.preventDefault();
+        });
+        $("body").bind("swiperight", function(e)
+        {
+            e.preventDefault();
+        });
+        </script>
+        <div data-role="page" style="min-height:480px;" dsid="musicQueueScreen" id="musicQueueScreen"
+        class="type-interior" data-theme="b">
+            <!-- mobileheader -->
+            <div data-role="header" data-position="fixed" data-add-back-btn="false" data-back-btn-text="Back"
+            data-theme="b" name="mobileheader" id="musicQueueScreen_mobileheader" class="musicQueueScreen_mobileheader">
+                <h1 dsid="mobileheader">
+                    Caption
+                </h1>
+            </div>
+            <!-- mobilecontainer -->
+            <div data-role="content" id="musicQueueScreen_mobilecontainer" name="mobilecontainer"
+            class="musicQueueScreen_mobilecontainer ui-content" dsid="mobilecontainer" data-theme="b">
+                <link href="musicQueueScreen.css" rel="stylesheet" type="text/css" />
+                <script type="text/javascript" src="musicQueueScreen.js">
+                </script>
+                <!-- mobilecarousel_1 -->
+                <div id="musicQueueScreen_mobilecarousel_1" name="mobilecarousel_1" dsid="mobilecarousel_1"
+                data-role="carousel" tiggzitype="object" apperytype="object" apperyclass="carousel"
+                tiggziclass="carousel" class="musicQueueScreen_mobilecarousel_1" style="">
+                    <div class="ui-carousel-items">
+                        <div class="ui-left-arrow">
+                        </div>
+                        <div class="ui-right-arrow">
+                        </div>
+                        <div id="musicQueueScreen_mobilecarouselitem_2" name="mobilecarouselitem_2" dsid="mobilecarouselitem_2"
+                        data-type="html" data-title="" class="musicQueueScreen_mobilecarouselitem_2" style="">
+                            <div style="height: 100%; ">
+                            </div>
+                        </div>
+                        <div id="musicQueueScreen_mobilecarouselitem_3" name="mobilecarouselitem_3" dsid="mobilecarouselitem_3"
+                        data-type="html" data-title="" class="musicQueueScreen_mobilecarouselitem_3" style="">
+                            <div style="height: 100%; ">
+                            </div>
+                        </div>
+                        <div id="musicQueueScreen_mobilecarouselitem_4" name="mobilecarouselitem_4" dsid="mobilecarouselitem_4"
+                        data-type="html" data-title="" class="musicQueueScreen_mobilecarouselitem_4" style="">
+                            <div style="height: 100%; ">
+                            </div>
+                        </div>
+                        <div id="musicQueueScreen_mobilecarouselitem_5" name="mobilecarouselitem_5" dsid="mobilecarouselitem_5"
+                        data-type="html" data-title="" class="musicQueueScreen_mobilecarouselitem_5" style="">
+                            <div style="height: 100%; ">
+                            </div>
+                        </div>
+                        <div id="musicQueueScreen_mobilecarouselitem_6" name="mobilecarouselitem_6" dsid="mobilecarouselitem_6"
+                        data-type="html" data-title="" class="musicQueueScreen_mobilecarouselitem_6" style="">
+                            <div style="height: 100%; ">
+                            </div>
+                        </div>
+                        <div id="musicQueueScreen_mobilecarouselitem_7" name="mobilecarouselitem_7" dsid="mobilecarouselitem_7"
+                        data-type="html" data-title="" class="musicQueueScreen_mobilecarouselitem_7" style="">
+                            <div style="height: 100%; ">
+                            </div>
+                        </div>
+                        <div id="musicQueueScreen_mobilecarouselitem_8" name="mobilecarouselitem_8" dsid="mobilecarouselitem_8"
+                        data-type="html" data-title="" class="musicQueueScreen_mobilecarouselitem_8" style="">
+                            <div style="height: 100%; ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- mobilefooter -->
+            <div data-role="footer" data-position="fixed" class="musicQueueScreen_mobilefooter"
+            name="mobilefooter" dsid="mobilefooter" id="musicQueueScreen_mobilefooter" data-theme="b">
+            </div>
+        </div>
+    </body>
+
+</html>

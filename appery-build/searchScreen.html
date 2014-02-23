@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>
+            searchScreen
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="initial-scale=1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link href="files/resources/lib/theme/jqm/jqm.css" rel="stylesheet" />
+        <link href="files/resources/lib/jquerymobile/1.4.0/jquery.mobile.structure-1.4.0.css"
+        rel="stylesheet" />
+        <script type="text/javascript" src="files/resources/lib/store/json2.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquery/jquery-1.9.1.js">
+        </script>
+        <script type="text/javascript">
+                    $(document).bind("mobileinit", function()
+            {
+                if (navigator.userAgent.toLowerCase().indexOf("android") != -1)
+                {
+                    $.mobile.defaultPageTransition = 'none';
+                    $.mobile.defaultDialogTransition = 'none';
+                }
+                if (navigator.userAgent.toLowerCase().indexOf("msie") != -1)
+                {
+                    $.mobile.allowCrossDomainPages = true;
+                    $.support.cors = true;
+                }
+            });
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquerymobile/1.4.0/jquery.mobile-1.4.0.js">
+        </script>
+        <script type="text/javascript" src="files/resources/js/mobilebase.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/event/customEventHandler.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/sha1.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/oauth.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/contexts.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/jsonpath.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/jquery.xml2json.min.js">
+        </script>
+        <link href="files/resources/lib/exadel-carousel/jquery.mobile.carousel.css" rel="stylesheet"
+        type="text/css" />
+        <script type="text/javascript" src="files/resources/lib/exadel-carousel/carousel.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/appery.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/get_target_platform.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/cordova.js">
+        </script>
+        <link href="files/resources/css/mobilebase.css" rel="stylesheet" type="text/css"
+        />
+    </head>
+    
+    <body>
+        <script language="JavaScript" type="text/javascript">
+                if (navigator.userAgent.match(/iP/i))
+        {
+            $(window).bind('orientationchange', function(event)
+            {
+                $('meta[name="viewport"]').attr('content', 'initial-scale=1.0,maximum-scale=1.0, ' + ((window.orientation == 90 || window.orientation == -90 || window.orientation == 270) ? "height=device-width,width=device-height" : "height=device-height,width=device-width"));
+            }).trigger('orientationchange');
+        }
+        $("body").bind("swipeleft", function(e)
+        {
+            e.preventDefault();
+        });
+        $("body").bind("swiperight", function(e)
+        {
+            e.preventDefault();
+        });
+        </script>
+        <div data-role="page" style="min-height:480px;" dsid="searchScreen" id="searchScreen"
+        class="type-interior" data-theme="b">
+            <!-- zwayoTitleHeader -->
+            <div data-role="header" data-position="inline" data-add-back-btn="false" data-back-btn-text="&nbsp;"
+            data-theme="b" name="zwayoTitleHeader" id="searchScreen_zwayoTitleHeader" class="searchScreen_zwayoTitleHeader">
+                <h1 dsid="zwayoTitleHeader">
+                    Zwayo
+                </h1>
+            </div>
+            <!-- mobilecontainer -->
+            <div data-role="content" id="searchScreen_mobilecontainer" name="mobilecontainer"
+            class="searchScreen_mobilecontainer ui-content" dsid="mobilecontainer" data-theme="b">
+                <link href="searchScreen.css" rel="stylesheet" type="text/css" />
+                <script type="text/javascript" src="searchScreen.js">
+                </script>
+                <!-- searchMusicBar -->
+                <div data-role="fieldcontain" class="searchScreen_searchMusicBar ">
+                    <div id="searchScreen_searchMusicBar-cover-div">
+                        <img id="searchScreen_searchMusicBar-cover-img" src="files/resources/image/icon-search-cover.png"
+                        />
+                    </div>
+                    <input type="search" name="searchMusicBar" id="searchScreen_searchMusicBar" dsid="searchMusicBar"
+                    value="" placeholder="Search Music" data-theme="b" tabindex="1" class="searchScreen_searchMusicBar"
+                    />
+                </div>
+            </div>
+            <!-- mobilefooter -->
+            <div data-role="footer" data-position="fixed" class="searchScreen_mobilefooter"
+            name="mobilefooter" dsid="mobilefooter" id="searchScreen_mobilefooter" data-theme="b">
+            </div>
+        </div>
+    </body>
+
+</html>

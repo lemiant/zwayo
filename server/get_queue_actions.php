@@ -15,16 +15,31 @@ if(!empty($_COOKIE['party_id'])){
 
     $query = "SELECT id, action, body FROM queue_actions WHERE `party_id`=$party_id AND `id` > $last ORDER BY id ASC";
     $result = mysqli_query($con, $query);
-    $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $rows = array();
+    while($row = mysqli_fetch_assoc($result)){
+        $rows[] = $row;
+    }
 
     //Only set_active once
     $output = array();
     $s_a = False;
-    foreach($rows as $row){
-        if($row['action'] == 'set_active') $s_a = $row;
+    $sai = 0 ;
+    for($i=0; $i<count($rows); $i++){
+        $row = $rows[$i];
+        if($row['action'] == 'set_active'){
+            $s_a = $row;
+            $sai = $i;
+        }
         else $output[] = $row;
     }
-    if($s_a) $output[] = $s_a;
+    if($s_a){
+        if($sai == $i-1) $output[] = $s_a;
+        else{
+            $temp = array_pop($output);
+            $output[] = $s_a;
+            $output[] = $temp;
+        }
+    }
 
     print json_encode(array('result' => 'success', 'items' => $output));
 }

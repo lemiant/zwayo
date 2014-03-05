@@ -7,7 +7,6 @@
  */
 require_once("mysql_utils.php");
 $con = connect_to_mch();
-
 if(isset($_POST['lat']) && isset($_POST['long'])){
     $lat = floatval($_POST['lat']);
     $long = floatval($_POST['long']);

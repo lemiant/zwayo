@@ -1,0 +1,14 @@
+
+img#fb-login {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+}
+
+#modal p {
+    text-align: center;
+}
+
+div#header {
+    display: none;
+}

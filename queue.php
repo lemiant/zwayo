@@ -1,91 +1,77 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=no">
-    <link href='http://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'>
-    <script type="text/javascript">
-        WebFontConfig = {
-            google: { families: [ 'Exo+2::latin' ] }
-        };
-        (function() {
-            var wf = document.createElement('script');
-            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-                    '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-            wf.type = 'text/javascript';
-            wf.async = 'true';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(wf, s);
-        })(); </script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- FACEBOOK -->
+<script type="text/javascript">
+//Facebook
+    // Load the SDK asynchronously
+  (function(d){
+   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement('script'); js.id = id; js.async = true;
+   js.src = "//connect.facebook.net/en_US/all.js";
+   ref.parentNode.insertBefore(js, ref);
+  }(document));
+    
+    window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '1401303503466142',
+    status     : true, // check login status
+    cookie     : true, // enable cookies to allow the server to access the session
+    xfbml      : false  // parse XFBML
+  });
+  $('#fb-login').on('click', function(){ FB.login(undefined, {scope: 'user_friends'}); })
+  FB.Event.subscribe('auth.authResponseChange', function(response) {
+    // Here we specify what we do with the response anytime this event occurs. 
+    if (response.status === 'connected') {
+      window.response = response
+      FB.api(
+            "/me",
+            function (response) {
+                window.me = response;
+                $.ajax({
+                    url: 'server/am_i_host.php',
+                    type: 'post',
+                    data: {fb: me.id},
+                    success: check_host
+                })
+            }
+        );
+    } else {
+        // TODO: Redirect home (They aren't logged in)
+        // Actually you'll need to do the checks somewhere else
+        // THis only fires on change
+    }
+  });
+  };
+</script>
+<!-- IS_HOST -->
+<script type="text/javascript">
+    //IS_HOST
+    function check_host(resp){
+        if(resp == 'yes'){
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+    }
+    //Load youtube iframe API
+    function onYouTubeIframeAPIReady() {
+        $("#queue_wrapper").append('<input type="submit" value="play" id="play" />')
+        $('#play').bind('click', function(){ init_play($('#queue').children().last()); })
+    }
+</script>
+    
 </head>
 <body>
+<div id="fb-root"></div>
 <div id="queue_wrapper">
-<style type="text/css">
-    body{
-        font-family: Arial, sans-serif;
-    }
-    p.song_title{
-        color: #cccccc;
-        font-size: 13px;
-        margin: 3px;
-    }
-    p.song_guest{
-        color: #cccccc;
-        font-size: 10px;
-        margin: 5px 0 2px 0;
-    }
-    html, body{
-        padding: 0;
-        margin: 0;
-    }
-    #queue li img{
-        float: left;
-        height: 60px;
-        margin: 0 10px;
-    }
-    #queue li{
-        border-top: solid black 1px;
-        border-bottom: solid black 1px;
-        width: 100%;
-        background-color: #333333;
-        list-style-type: none;
-        height: 70px;
-        padding: 0;
-        margin: 0;
-    }
-    #queue div.item{
-        height: 60px;
-        margin: 5px;
-    }
-    ul#queue{
-        padding: 0;
-        margin: 0
-    }
-
-    #queue li.active{
-        background-color: #8A360F;
-    }
-    #queue.host li.active{
-        height: 170px;
-    }
-    #queue.host li.active iframe{
-        margin:5px 15;
-    }
-
-    #add_music_button{
-        border-top: solid black 1px;
-        border-bottom: solid black 1px;
-        width: 100%;
-        display: block;
-        text-align: center;
-        background-color: #B86E00;
-        padding: 5px;
-        color: black;
-        font-weight: bold;
-        padding: 5px 0;
-    }
-</style>
+<link type="text/css" href="css/style.css" rel="stylesheet" />
+<link type="text/css" href="css/queue.css" rel="stylesheet" />
 <a href="#" id="add_music_button">+ Add Music</a>
-<ul id="queue"></ul>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<div id="queue"></div>
 <script type="text/javascript">
     $('#add_music_button').bind('click', function(){
         console.log('click')
@@ -93,55 +79,28 @@
         $('#search_wrapper').show();
     })
 </script>
+    
 <script type="text/javascript">
-    function getCookie(name) {
-        var dc = document.cookie;
-        var prefix = name + "=";
-        var begin = dc.indexOf("; " + prefix);
-        if (begin == -1) {
-            begin = dc.indexOf(prefix);
-            if (begin != 0) return null;
-        }
-        else
-        {
-            begin += 2;
-            var end = document.cookie.indexOf(";", begin);
-            if (end == -1) {
-                end = dc.length;
-            }
-        }
-        return unescape(dc.substring(begin + prefix.length, end));
-    }
-</script>
-
-<script type="text/javascript">
-    if(getCookie("admin_key")){
-        IS_HOST = true;
-        $('#queue').addClass("host")
-    }
-    else IS_HOST = false
     last_update = 0
     function apply(rule, list){
         body = $.parseJSON(rule.body)
         if(rule.action == 'add'){
 //            console.log(body)
 //            console.log(list.get()[0])
-            list.prepend('<li class="container">'+
-                '<div class="item" id="'+body.videoId+'">'+
+            list.prepend('<div class="item" id="'+body.videoId+'">'+
                     //'<img class="handle"'+
                     '<img src="'+body.thumb+'">'+
                     '<p class="song_title">'+truncate(body.title, 60)+'</p>'+
                     '<p class="song_guest">Added by '+truncate(body.guest, 30)+'</p>'+
-                    '</div>'+
-                '</li>')
+                '</div>')
         }
         else if(rule.action == 'set_active' && !IS_HOST){
             set_active(body.videoId)
         }
     }
     function set_active(videoId){
-        $('li.active').removeClass('active')
-        $('div#'+videoId).parent().addClass('active')
+        $('div.active').removeClass('active')
+        $('div#'+videoId).addClass('active')
     }
     function truncate(str, size){
         if(str.length > size){
@@ -151,39 +110,34 @@
     }
 
     var player
-    function init_play(selector, autoplay){
+    function init_play(div, autoplay){
         if(autoplay == undefined) autoplay = true;
-        console.log(selector.get(0));
-        window.select = selector.get(0);
-        div = selector.children('div.item')
-        console.log(div)
-        if(typeof div != 'undefined'){
-            div.hide()
-            videoId = div.get(0).id
-            send_set_active(videoId)
-            selector.prepend('<div id="player"></div>')
-            player = new YT.Player('player', {
-                height: '160',
-                width: '200',
-                videoId: videoId,
-                events: {
-                    onReady: onPlayerReady,
-                    onStateChange: (autoplay ? onStateChange : function(){})
-                }
-            });
-        }
+    //    console.log(selector.get(0));
+    //    window.select = selector.get(0);
+        div.children().hide()
+        videoId = div.attr('id')
+        send_set_active(videoId)
+        div.append('<div id="player" />')
+        player = new YT.Player('player', {
+            height: '160',
+            width: '200',
+            videoId: videoId,
+            events: {
+                onReady: onPlayerReady,
+                onStateChange: (autoplay ? onStateChange : function(){})
+            }
+        });
     }
     function onPlayerReady(e){
         e.target.playVideo();
     }
     function onStateChange(e){
-//        console.log(e)
         if(e.data == 0){
-            container = $(e.target.a).parent()
-            container.children("iframe").remove()
-            container.children("div.item").show()
-            if(typeof container.next() != "undefined"){
-                init_play(container.prev());
+            div = $(e.target.a).parent('div.item')
+            div.children("#player").remove()
+            div.children().show()
+            if(typeof div.prev() != "undefined"){
+                init_play(div.prev());
             }
         }
     }
@@ -210,10 +164,6 @@ var first = true
         }
 //        console.log("set_timeout")
         setTimeout("get_queue_actions()", 2000)
-        if(first && IS_HOST){
-            //init_play($('#queue').children().last(), false);
-            first = false;
-        }
     }
 
     function get_queue_actions(){
@@ -228,19 +178,6 @@ var first = true
     console.log('load')
 
     get_queue_actions()
-
-    //Load youtube iframe API
-    if(IS_HOST){
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    }
-
-    function onYouTubeIframeAPIReady() {
-        $("#queue_wrapper").append('<input type="submit" value="play" id="play" />')
-        $('#play').bind('click', function(){ init_play($('#queue').children().last()); })
-    }
 </script>
 </div>
 <?php require('search.php') ?>

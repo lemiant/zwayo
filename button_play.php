@@ -1,21 +1,6 @@
-
-html, body{
-    padding: 0;
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
-div.item{
-    background-color: #333333;
-    border-top: solid black 1;
-    width: 100%;
-    padding: 5px 0 5px 12px;   
-}
-div.item:last-of-type{   
-    border-bottom: solid black 1;
-}
-
-
+<html>
+    <head>
+        <style type="text/css">
 .button {
 	-moz-box-shadow:inset 0px 1px 0px 0px #fce2c1;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #fce2c1;
@@ -44,22 +29,24 @@ div.item:last-of-type{
 	font-size:15px;
 	font-weight:bold;
 	font-style:italic;
-	height:36px;
-	line-height:36px;
+	height:42px;
+	line-height:42px;
     padding: 0 14px;
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #cc9f52;
-    cursor: pointer;
 }
 .button:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fb9e25), color-stop(1, #ffc477) );
 	background:-moz-linear-gradient( center top, #fb9e25 5%, #ffc477 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffc477');
 	background-color:#fb9e25;
-    cursor: pointer;
 }.button:active {
 	position:relative;
 	top:1px;
-    cursor: pointer;
-}
+}</style>
+    </head>
+    <body>
+        <div class="button">Play</div>
+    </body>
+</html>

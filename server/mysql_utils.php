@@ -8,6 +8,7 @@
 
 function connect_to_mch(){
     return mysqli_connect("localhost","root","","mch");
+    //return mysqli_connect("localhost","root","safeway","mch");
 }
 function check_party_id($con, $party_id){
     $query = "SELECT id FROM parties WHERE id='$party_id'";
@@ -35,6 +36,13 @@ function rand_letter($num=1){
         $key .= chr(97+ mt_rand(0,25));
     }
 	return $key;
+}
+function fetch_all($result){
+    $rows = array();
+    while($row = mysqli_fetch_assoc($result)){
+    $rows[] = $row;
+    }
+    return $rows;
 }
 
 $FAILURE = json_encode(array("result" => "failure"));

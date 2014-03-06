@@ -1,25 +1,25 @@
-#queue div.item{
+.queue div.item{
     height: 60px;
 }
-#queue div img{
+.queue div img{
     float: left;
     height: 60px;
     margin: 0 10px;
 }
-#queue p.song_title{
+.queue p.song_title{
     color: #cccccc;
     font-size: 13px;
     margin: 3px;
 }
-#queue p.song_guest{
+.queue p.song_guest{
     color: #cccccc;
     font-size: 10px;
     margin: 5px 0 2px 0;
 }
-#queue div.active{
+.queue div.active{
     background-color: #8A360F;
 }
-#queue.host div.active{
+.queue div.playing{
     height: 170px;
 }
 

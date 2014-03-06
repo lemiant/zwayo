@@ -1,5 +1,6 @@
 <html>
 <head>
+    <meta name="viewport" content="width=device-width; initial-scale=1;">
     <link type="text/css" href="css/style.css" rel="stylesheet" />
 <link type='text/css' href='css/index.css' rel='stylesheet' media='screen' />
     <style>
@@ -73,22 +74,43 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
-        //request_parties()
+        $('#party_name_input').on('click', function(e){e.stopPropagation(); e.preventDefault()})
+        $(document).on('click', 'div.item', function(){
+            //alert('hi')
+            div = $(this)
+            if(!div.hasClass('open')){
+                $('div.item.open').removeClass('open').find('div.extra').slideUp()
+                div.addClass('open')
+                div.find('div.extra').slideDown()
+            }
+            else{
+                div.removeClass('open')
+                div.find('div.extra').slideUp()   
+            }
+        })
+        $('#fb-modal').modal({close: false,
+                            containerCss: {height: '130px', width:'70%'}
+        })
     })
     function populate_parties(result, status){
         console.log('pop')
         for(i=0; i<result.items.length; i++){
             row = result.items[i];
-            $("#party_list").append($('<div class="item" />').append(
+            $("#party_list").append($('<div class="item" onclick="" />').append(
                                     '<h2>'+row.party_name+'</h2>'+
-                                    '<div class="extra"><input type="submit" value="Join the party!" onclick="join_party('+row.id+')"></div>'))
+                                    '<div class="extra"><a class="button" onclick="join_party(event,'+row.id+')">Join the party!</a></div>'))
         }
     }
     
-    function join_party(party_id){
+    function join_party(e, party_id){
+        e.preventDefault()
+        e.stopPropagation()
         $('<form action="server/join_party.php" method="POST"><input type="hidden" name="party_id" value="'+party_id+'" /></form>').submit()
     }
-    function make_party(){
+    function make_party(e){
+        alert('hiya')
+        e.preventDefault()
+        e.stopPropagation()
         div = $('div#make_party')
         $('<form action="server/join_party.php" method="POST">'+
           '<input type="hidden" name="action" value="make_party"/>'+
@@ -102,11 +124,11 @@
 <body>
 <div id="fb-root"></div>
 <div id="header">Zwayo</div>
-    <div class="item">
-        <h2>Make Party</h2>
+    <div id="make" class="item">
+        <h2 onclick="">Make Party</h2>
             <div id="make_party" class="extra">
-                <input type="text" id="party_name_input" name="party_name" placeholder="Party Name" /><br />
-                <input type="submit" value="Make party" onclick="make_party()" />
+                <input type="text" style="margin-bottom: 10px; font-size: 15px;" id="party_name_input" name="party_name" placeholder="Party Name" /><br />
+                <a class="button" onclick="make_party(event)">Make Party</a>
             </div>
         </form></div>
     </div>
@@ -114,19 +136,9 @@
 <div id="fb-modal" style="display: none">
     <p>Hard to have a party without friends ;)</p>
     <a href="#"><img id="fb-login" src="imgs/facebook.png" /></a>
+    <div></div>
 </div>
 
 </body>
-<!--
-function getLocation()
-{
-    console.log('gl')
-    if (navigator.geolocation)
-    {
-        navigator.geolocation.getCurrentPosition(request_parties);
-    }
-    else{x.innerHTML = "Geolocation is not supported by this browser.";}
-}
--->
 </html>
 

@@ -1,6 +1,6 @@
 
 img#fb-login {
-    width: 100%;
+    width: 200px;
     max-width: 100%;
     display: block;
 }
@@ -10,5 +10,25 @@ img#fb-login {
 }
 
 div#header {
-    display: none;
+    #display: none;
+    padding: 8px 0 8px 18px;
+    font-size: 20px;
+    background-color: black;
+    font-family: "Avant Garde";
+}
+
+div.extra {
+    display:none;
+    padding: 0 11px 10px 11px;
+}
+
+div#make {
+    padding: 0;
+    text-align: center;
+    background-color: #B86E00;;
+}
+
+h2 {
+    margin: 0;
+    padding: 12px;
 }

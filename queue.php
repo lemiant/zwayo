@@ -1,6 +1,6 @@
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="viewport" content="width=device-width; initial-scale=1;">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <!-- FACEBOOK -->
 <script type="text/javascript">
@@ -49,6 +49,7 @@
 <!-- IS_HOST -->
 <script type="text/javascript">
     //IS_HOST
+    IS_HOST = false;
     function check_host(resp){
         if(resp == 'yes'){
             var tag = document.createElement('script');
@@ -59,7 +60,7 @@
     }
     //Load youtube iframe API
     function onYouTubeIframeAPIReady() {
-        $("#queue_wrapper").append('<input type="submit" value="play" id="play" />')
+        $("#queue_wrapper").append('<div style="padding: 8px; text-align:center;"><a class="button" id="play">&nbsp;Play All&nbsp;</a></div>')
         $('#play').bind('click', function(){ init_play($('#queue').children().last()); })
     }
 </script>
@@ -71,7 +72,7 @@
 <link type="text/css" href="css/style.css" rel="stylesheet" />
 <link type="text/css" href="css/queue.css" rel="stylesheet" />
 <a href="#" id="add_music_button">+ Add Music</a>
-<div id="queue"></div>
+<div id="queue" class="queue"></div>
 <script type="text/javascript">
     $('#add_music_button').bind('click', function(){
         console.log('click')
@@ -117,6 +118,7 @@
         div.children().hide()
         videoId = div.attr('id')
         send_set_active(videoId)
+        div.addClass('playing')
         div.append('<div id="player" />')
         player = new YT.Player('player', {
             height: '160',
@@ -134,6 +136,7 @@
     function onStateChange(e){
         if(e.data == 0){
             div = $(e.target.a).parent('div.item')
+            div.removeClass('playing')
             div.children("#player").remove()
             div.children().show()
             if(typeof div.prev() != "undefined"){

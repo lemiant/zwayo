@@ -16,7 +16,7 @@ if(isset($_POST['friends'])){
     }
     $query .= implode(' OR ', $bits);
     $result = mysqli_query($con, $query);
-    $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $rows = fetch_all($result);
 
     print json_encode(array("result" => "success", "items" => $rows));
 }

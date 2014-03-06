@@ -27,7 +27,7 @@
     ul#autocomplete_list{
         margin: -13px auto 0;
         padding: 12px 0 0 0;
-        width: 94%;
+        width: 90%;
         background-color: #f2f2f2;
         border-bottom: 1px solid #111111;
         border-left: 1px solid #111111;
@@ -54,34 +54,10 @@
         height: 25px;
         position: relative;
         width: 90%;
-        margin: 10px auto 0;
+        margin: 10px auto;
         display: block;
     }
-
-    #search_queue li img{
-        float: left;
-        height: 60px;
-        margin: 0 10px;
-    }
-    #search_queue li{
-        border-top: solid black 1px;
-        border-bottom: solid black 1px;
-        width: 100%;
-        background-color: #333333;
-        list-style-type: none;
-        height: 70px;
-        padding: 0;
-        margin: 0;
-    }
-    #search_queue div.item{
-        height: 60px;
-        margin: 5px;
-    }
-    #search_queue {
-        padding: 0;
-        margin: 0
-    }
-    p.song_title{
+    #search_wrapper .queue .item p.song_title{
         color: #cccccc;
         font-size: 13px;
         margin: 3px;
@@ -92,7 +68,7 @@
     <input id="search_bar" type="text">
     <ul id="autocomplete_list"></ul>
 </div>
-<div id="search_queue"></div>
+<div id="search_queue" class="queue"></div>
 <!--<div id="guess_wrapper" style="display: none">-->
     <!--<div style="float: left; height: 100%"><a href="#" id="left_arrow"><img src="imgs/left-arrow.png" height="40" /></a></div>-->
     <!--<div style="float: right; height: 100%"><a href="#" id="right_arrow"><img src="imgs/right-arrow.png" height="40" /></a></div>-->
@@ -141,13 +117,13 @@ function render_page(result){ //This could be much more efficient (oh well :-)
             if(typeof row.snippet.thumbnails.small != 'undefined')thumb = row.snippet.thumbnails.small.url
             else if(typeof row.snippet.thumbnails.default != 'undefined')thumb = row.snippet.thumbnails.default.url
             else thumb = ""
-            $('#search_queue').append('<a href="#"><li class="container">'+
+            $('#search_queue').append('<a href="#">'+
                     '<div class="item" id="'+row.id.videoId+'">'+
                 //'<img class="handle"'+
                     '<img src="'+thumb+'">'+
                     '<p class="song_title">'+truncate(row.snippet.title, 90)+'</p>'+
                     '</div>'+
-                    '</li></a>')
+                    '</a>')
         }
         $('#search_queue').children('a').bind('click', add_video_to_queue)
     }
@@ -166,15 +142,17 @@ function autocomplete(suggest){
     if(suggest == undefined) suggest = true;
     gapi.client.setApiKey(apiKey)
     query = $(this).val();
-    if(query.length >= 4 && suggest){
-        $.ajax({
+    console.log(this)
+/*     if(query.length >= 4 && suggest){
+       $.ajax({
             url: "http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q="+encodeURIComponent(query)+"&key="+apiKey+"&format=5&alt=json&callback=?",
             dataType: 'jsonp',
             success: update_autocomplete
-        })
+        }) 
     }
-    else list.empty()
+    else list.empty()*/
     if(query.length >= 4){
+        $('#search_queue').show()
         gapi.client.request({
             path: 'youtube/v3/search',
             params: {
@@ -187,7 +165,10 @@ function autocomplete(suggest){
             callback: render_page
         })
     }
-    else $('#guess_wrapper').hide()
+    else{
+        console.log('hiding')
+        $('#search_queue').hide()
+    }
 }
 
 function add_video_to_queue(){
@@ -197,6 +178,7 @@ function add_video_to_queue(){
     body.videoId = div.get(0).id
     body.title = div.children('p.song_title').get(0).innerHTML
     body.thumb = div.children('img').get(0).src
+    body.guest = me.name
     console.log(body)
     $.ajax({
         url: 'server/set_queue_action.php',
@@ -207,6 +189,8 @@ function add_video_to_queue(){
     })
     $('#search_wrapper').hide();
     $('#queue_wrapper').show();
+    $('#search_wrapper #search_bar').val('')
+    autocomplete.call($('#search_bar').get(0), false)
 }
 
 function onLoad(){

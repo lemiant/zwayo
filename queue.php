@@ -13,7 +13,7 @@
    js.src = "//connect.facebook.net/en_US/all.js";
    ref.parentNode.insertBefore(js, ref);
   }(document));
-    
+
     window.fbAsyncInit = function() {
   FB.init({
     appId      : '1401303503466142',
@@ -23,7 +23,7 @@
   });
   $('#fb-login').on('click', function(){ FB.login(undefined, {scope: 'user_friends'}); })
   FB.Event.subscribe('auth.authResponseChange', function(response) {
-    // Here we specify what we do with the response anytime this event occurs. 
+    // Here we specify what we do with the response anytime this event occurs.
     if (response.status === 'connected') {
       window.response = response
       FB.api(
@@ -61,10 +61,42 @@
     //Load youtube iframe API
     function onYouTubeIframeAPIReady() {
         $("#queue_wrapper").append('<div style="padding: 8px; text-align:center;"><a class="button" id="play">&nbsp;Play All&nbsp;</a></div>')
-        $('#play').bind('click', function(){ init_play($('#queue').children().last()); })
+        $('#play').bind('click', function(){ start_play() })
     }
+    function start_play(){
+        player_div = $('<div id="player_div" class="item" style="display:none"><div id="player" /> </div>')
+        $("#queue").append(player_div)
+        player = new YT.Player('player', {
+            height: '160',
+            width: '200',
+            events: {
+                onReady: play_above,
+                onStateChange: onStateChange
+            }
+        });
+    }
+    function play_above(){
+        var above = player_div.prev()
+        if(above){
+            player_div.show()
+            videoId = above.attr('id')
+            player.loadPlaylist([videoId])
+            send_set_active(videoId)
+        }
+        else{
+            player_div.hide()
+        }
+    }
+    function onStateChange(e){
+        console.log(e)
+        if(e.data == 0){
+            player_div.after(player_div.prev())
+            play_above()
+        }
+    }
+
 </script>
-    
+
 </head>
 <body>
 <div id="fb-root"></div>
@@ -80,7 +112,7 @@
         $('#search_wrapper').show();
     })
 </script>
-    
+
 <script type="text/javascript">
     last_update = 0
     function apply(rule, list){
@@ -108,41 +140,6 @@
             return str.slice(0,size-4)+"..."
         }
         return str
-    }
-
-    var player
-    function init_play(div, autoplay){
-        if(autoplay == undefined) autoplay = true;
-    //    console.log(selector.get(0));
-    //    window.select = selector.get(0);
-        div.children().hide()
-        videoId = div.attr('id')
-        send_set_active(videoId)
-        div.addClass('playing')
-        div.append('<div id="player" />')
-        player = new YT.Player('player', {
-            height: '160',
-            width: '200',
-            videoId: videoId,
-            events: {
-                onReady: onPlayerReady,
-                onStateChange: (autoplay ? onStateChange : function(){})
-            }
-        });
-    }
-    function onPlayerReady(e){
-        e.target.playVideo();
-    }
-    function onStateChange(e){
-        if(e.data == 0){
-            div = $(e.target.a).parent('div.item')
-            div.removeClass('playing')
-            div.children("#player").remove()
-            div.children().show()
-            if(typeof div.prev() != "undefined"){
-                init_play(div.prev());
-            }
-        }
     }
 
     function send_set_active(videoId){

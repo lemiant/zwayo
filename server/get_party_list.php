@@ -9,12 +9,11 @@ require_once("mysql_utils.php");
 $con = connect_to_mch();
 if(isset($_POST['friends'])){
     $range = 0.005;
-    $query = "SELECT `id`, `party_name`, `host_name` FROM parties WHERE ";
-    $bits = array();
-    foreach($_POST['friends'] as $friend){
-        $bits[] = "`host_fb`=".mysqli_real_escape_string($con, $friend);
-    }
-    $query .= implode(' OR ', $bits);
+    $query = "SELECT `id`, `party_name`, `host_name` FROM parties WHERE `host_fb` IN ";
+    array_walk($_POST['friends'], function(&$friend) use (&$con){
+        $friend = mysqli_real_escape_string($con, $friend)
+    });
+    $query .= '('.implode(',', $_POST['friends']).')';
     $result = mysqli_query($con, $query);
     $rows = fetch_all($result);
 

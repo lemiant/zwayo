@@ -23,7 +23,7 @@
    js.src = "//connect.facebook.net/en_US/all.js";
    ref.parentNode.insertBefore(js, ref);
   }(document));
-    
+
     window.fbAsyncInit = function() {
   FB.init({
     appId      : '1401303503466142',
@@ -31,9 +31,9 @@
     cookie     : true, // enable cookies to allow the server to access the session
     xfbml      : false  // parse XFBML
   });
-  $('#fb-login').on('click', function(){ FB.login(undefined, {scope: 'user_friends'}); })
+  $('#fb-login').on('click', function(){ FB.login(function(){}, {scope: 'user_friends'}); })
   FB.Event.subscribe('auth.authResponseChange', function(response) {
-    // Here we specify what we do with the response anytime this event occurs. 
+    // Here we specify what we do with the response anytime this event occurs.
     if (response.status === 'connected') {
           $.modal.close()
           window.friends = []
@@ -52,12 +52,12 @@
           })
     } else {
       $('#fb-modal').modal({close: false,
-                            containerCss: {height: 'auto', width:'70%'}, 
+                            containerCss: {height: 'auto', width:'70%'},
                             dataCss: {padding: '0'}})
     }
   });
   };
-    
+
     fb_done = []
     function fb_finish(query){
         fb_done.push(query)
@@ -85,7 +85,7 @@
             }
             else{
                 div.removeClass('open')
-                div.find('div.extra').slideUp()   
+                div.find('div.extra').slideUp()
             }
         })
         $('#fb-modal').modal({close: false,
@@ -101,14 +101,13 @@
                                     '<div class="extra"><a class="button" onclick="join_party(event,'+row.id+')">Join the party!</a></div>'))
         }
     }
-    
+
     function join_party(e, party_id){
         e.preventDefault()
         e.stopPropagation()
         $('<form action="server/join_party.php" method="POST"><input type="hidden" name="party_id" value="'+party_id+'" /></form>').submit()
     }
     function make_party(e){
-        alert('hiya')
         e.preventDefault()
         e.stopPropagation()
         div = $('div#make_party')

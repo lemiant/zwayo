@@ -16,10 +16,10 @@
     font-size: 10px;
     margin: 5px 0 2px 0;
 }
-.queue div.active{
+.queue div.active, .queue div.item#player_div{
     background-color: #8A360F;
 }
-.queue div.playing{
+.queue div.item#player_div{
     height: 170px;
 }
 

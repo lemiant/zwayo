@@ -68,6 +68,7 @@
     <input id="search_bar" type="text">
     <ul id="autocomplete_list"></ul>
 </div>
+<div style="display: inline-block; position: absolute; top: 10px; right: 3%; background-color: grey; padding: 2px 4px; border: #444 solid 2px; cursor: pointer; font-family: Arial; font-size: 14px;" onclick="leave_search()">X</div>
 <div id="search_queue" class="queue"></div>
 <!--<div id="guess_wrapper" style="display: none">-->
     <!--<div style="float: left; height: 100%"><a href="#" id="left_arrow"><img src="imgs/left-arrow.png" height="40" /></a></div>-->
@@ -189,6 +190,9 @@ function add_video_to_queue(){
         })
     }
     else alert('You cannot add the same song twice. Sorry :(')
+    leave_search()
+}
+function leave_search(){
     $('#search_wrapper').hide();
     $('#queue_wrapper').show();
     $('#search_wrapper #search_bar').val('')

@@ -7,13 +7,13 @@
  */
 require_once("mysql_utils.php");
 $con = connect_to_mch();
+verify_login($con); //$USER_ID and $PARTY_ID
 
-if(!empty($_COOKIE['party_id'])){
-    $party_id = mysqli_real_escape_string($con, $_COOKIE['party_id']);
+if($PARTY_ID){
     if(isset($_POST['last'])) $last = mysqli_real_escape_string($con, $_POST['last']);
     else $last = 0;
 
-    $query = "SELECT id, action, body FROM queue_actions WHERE `party_id`=$party_id AND `id` > $last ORDER BY id ASC";
+    $query = "SELECT id, action, body FROM queue_actions WHERE `party_id`=$PARTY_ID AND `id` > $last ORDER BY id ASC";
     $result = mysqli_query($con, $query);
     $rows = array();
     while($row = mysqli_fetch_assoc($result)){

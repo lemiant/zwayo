@@ -12,7 +12,6 @@ if(!empty($_POST['fb']) && !empty($_COOKIE['party_id'])){
     mysqli_close($con);
 }
 else{
-    
     die('Arguments not valid');
 }
 ?>

@@ -2,75 +2,63 @@
 <head>
     <meta name="viewport" content="width=device-width; initial-scale=1;">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<!-- FACEBOOK -->
-<script type="text/javascript">
-//Facebook
-    // Load the SDK asynchronously
-  (function(d){
-   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-   if (d.getElementById(id)) {return;}
-   js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "//connect.facebook.net/en_US/all.js";
-   ref.parentNode.insertBefore(js, ref);
-  }(document));
-
-    window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '1401303503466142',
-    status     : true, // check login status
-    cookie     : true, // enable cookies to allow the server to access the session
-    xfbml      : false  // parse XFBML
-  });
-  $('#fb-login').on('click', function(){ FB.login(undefined, {scope: 'user_friends'}); })
-  FB.Event.subscribe('auth.authResponseChange', function(response) {
-    // Here we specify what we do with the response anytime this event occurs.
-    if (response.status === 'connected') {
-      window.response = response
-      FB.api(
-            "/me",
-            function (response) {
-                window.me = response;
-                $.ajax({
-                    url: 'server/am_i_host.php',
-                    type: 'post',
-                    data: {fb: me.id},
-                    success: check_host
-                })
-            }
-        );
-    } else {
-        // TODO: Redirect home (They aren't logged in)
-        // Actually you'll need to do the checks somewhere else
-        // THis only fires on change
-    }
-  });
-  };
-</script>
 <!-- IS_HOST -->
 <script type="text/javascript">
-    //IS_HOST
-    IS_HOST = false;
-    function check_host(resp){
-        if(resp == 'yes'){
-            var tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        }
-    }
+    $(document).ready(function(){
+
+                var isiOS = false;
+                var agent = navigator.userAgent.toLowerCase();
+                if(agent.indexOf('iphone') >= 0 || agent.indexOf('ipad') >= 0){
+                       isiOS = true;
+                }
+
+                $.fn.doubletap = function(onDoubleTapCallback, onTapCallback, delay){
+                    var eventName, action;
+                    delay = delay == null? 500 : delay;
+                    eventName = isiOS == true? 'touchend' : 'click';
+
+                    $(this).bind(eventName, function(event){
+                        var now = new Date().getTime();
+                        var lastTouch = $(this).data('lastTouch') || now + 1 /** the first time this will make delta a negative number */;
+                        var delta = now - lastTouch;
+                        clearTimeout(action);
+                        if(delta < 500 && delta > 0){
+                            if(onDoubleTapCallback != null && typeof onDoubleTapCallback == 'function'){
+                                onDoubleTapCallback(event);
+                            }
+                        }else{
+                            $(this).data('lastTouch', now);
+                            action = setTimeout(function(evt){
+                                if(onTapCallback != null && typeof onTapCallback == 'function'){
+                                    onTapCallback(evt);
+                                }
+                                clearTimeout(action);   // clear the timeout
+                            }, delay, [event]);
+                        }
+                        $(this).data('lastTouch', now);
+                    });
+                };
+        
+        player_div = $('#player_div')
+
+        get_queue_actions()
+
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    })
     //Load youtube iframe API
     function onYouTubeIframeAPIReady() {
         $("#queue_wrapper").append('<div style="padding: 8px; text-align:center;"><a class="button" id="play">&nbsp;Play All&nbsp;</a></div>')
-        $('#play').bind('click', function(){ start_play() })
-    }
-    function start_play(){
-        player_div = $('<div id="player_div" class="item" style="display:none"><div id="player" /> </div>')
-        $("#queue").append(player_div)
         player = new YT.Player('player', {
-            height: '160',
-            width: '200',
+            height: '200',
+            width: '300',
+            playerVars: {
+                playsinline: 1
+            },
             events: {
-                onReady: play_above,
+                onReady: function(){ $('#play').bind('click', function(){ place_after($('#queue .item').not(player_div).last()); play_above() }) },
                 onStateChange: onStateChange
             }
         });
@@ -80,7 +68,7 @@
         if(above){
             player_div.show()
             videoId = above.attr('id')
-            player.loadPlaylist([videoId])
+            player.loadVideoById({videoId: videoId, suggestedQuality: 'small'})
             send_set_active(videoId)
         }
         else{
@@ -90,12 +78,35 @@
     function onStateChange(e){
         console.log(e)
         if(e.data == 0){
-            player_div.after(player_div.prev())
-            play_above()
+            if(player_div.prev().prev().length){
+                place_after(player_div.prev().prev())
+                play_above()
+            }
+            else{
+                place_after($('.item').not('#player_div').last())
+                play_above()
+            }
         }
     }
+    function place_after(t){
+        t = $(t)
+        while(t.next('#player_div').length == 0){
+            if(t.prevAll('#player_div').length){ //is above
+                player_div.before(player_div.next())
+            } else if(t.nextAll('#player_div').length){
+                player_div.after(player_div.prev())
+            }
+        }
 
+    }
 </script>
+    <style type="text/css">
+    body{
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+    }
+    </style>
 
 </head>
 <body>
@@ -104,9 +115,12 @@
 <link type="text/css" href="css/style.css" rel="stylesheet" />
 <link type="text/css" href="css/queue.css" rel="stylesheet" />
 <a href="#" id="add_music_button">+ Add Music</a>
-<div id="queue" class="queue"></div>
+<div id="queue" class="queue">
+
+    <div id="player_div" class="item" style="display:none"> <div id="player"></div> </div>
+</div>
 <script type="text/javascript">
-    $('#add_music_button').bind('click', function(){
+    $('#add_music_button').on('click', function(){
         console.log('click')
         $('#queue_wrapper').hide();
         $('#search_wrapper').show();
@@ -120,14 +134,15 @@
         if(rule.action == 'add'){
 //            console.log(body)
 //            console.log(list.get()[0])
-            list.prepend('<div class="item" id="'+body.videoId+'">'+
-                    //'<img class="handle"'+
+            tr = $('<div class="item" id="'+body.videoId+'">'+
                     '<img src="'+body.thumb+'">'+
                     '<p class="song_title">'+truncate(body.title, 60)+'</p>'+
                     '<p class="song_guest">Added by '+truncate(body.guest, 30)+'</p>'+
                 '</div>')
+            tr.doubletap(function(e){ place_after($(e.target).closest('.item')); play_above(); }, function(){}, 400)
+            list.prepend(tr)
         }
-        else if(rule.action == 'set_active' && !IS_HOST){
+        else if(rule.action == 'set_active' && player_div.css('display') == 'none'){
             set_active(body.videoId)
         }
     }
@@ -163,7 +178,7 @@ var first = true
             if(js.items.length > 0) last_update = js.items[js.items.length-1].id
         }
 //        console.log("set_timeout")
-        setTimeout("get_queue_actions()", 2000)
+        setTimeout("get_queue_actions()", 2500)
     }
 
     function get_queue_actions(){
@@ -175,9 +190,6 @@ var first = true
             success: update_queue
         })
     }
-    console.log('load')
-
-    get_queue_actions()
 </script>
 </div>
 <?php require('search.php') ?>

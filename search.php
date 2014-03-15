@@ -148,7 +148,7 @@ function autocomplete(suggest){
             url: "http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q="+encodeURIComponent(query)+"&key="+apiKey+"&format=5&alt=json&callback=?",
             dataType: 'jsonp',
             success: update_autocomplete
-        }) 
+        })
     }
     else list.empty()*/
     if(query.length >= 4){
@@ -173,20 +173,22 @@ function autocomplete(suggest){
 
 function add_video_to_queue(){
     div = $(this).find('div.item')
-    console.log(this)
     body = {}
     body.videoId = div.get(0).id
-    body.title = div.children('p.song_title').get(0).innerHTML
-    body.thumb = div.children('img').get(0).src
-    body.guest = me.name
-    console.log(body)
-    $.ajax({
-        url: 'server/set_queue_action.php',
-        dataType: 'json',
-        type: 'post',
-        data: {action: 'add',
-            body: body}
-    })
+    console.log($('#queue .item#'+body.videoId))
+    if(!$('#queue .item#'+body.videoId).length){
+        body.title = div.children('p.song_title').get(0).innerHTML
+        body.thumb = div.children('img').get(0).src
+        console.log(body)
+        $.ajax({
+            url: 'server/set_queue_action.php',
+            dataType: 'json',
+            type: 'post',
+            data: {action: 'add',
+                body: body}
+        })
+    }
+    else alert('You cannot add the same song twice. Sorry :(')
     $('#search_wrapper').hide();
     $('#queue_wrapper').show();
     $('#search_wrapper #search_bar').val('')

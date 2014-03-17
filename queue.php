@@ -188,12 +188,13 @@
     }
     function onPlayerStateChange(e){
         if(e.data == 0){
+            console.log(player_div.prevAll('.item'))
             if(player_div.prevAll('.item').length >= 2){
                 place_after(player_div.prevAll('.item')[1])
                 play_above()
             }
             else{
-                play($('.item').not('#player_div').last())
+                play($('#queue .item').not('#player_div').last())
             }
         }
     } 

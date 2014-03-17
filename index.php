@@ -29,7 +29,8 @@
         </form></div>
     </div>
 
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>    <script type="text/javascript">
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>    
+<script type="text/javascript">
     $('.party_name, .button').on('click', function(e){e.stopPropagation();})
     $('div.item').on('click', function(){
         div = $(this)

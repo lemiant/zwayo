@@ -68,7 +68,7 @@ function leave_search(){
     $('#search_wrapper').hide();
     $('#queue_wrapper').show();
     $('#search_wrapper #search_bar').val('')
-    autocomplete.call($('#search_bar').get(0), false)
+    autocomplete()
 }
 
 apiKey = 'AIzaSyChJLHkrcdUPknA85oQwUHdVpssEmDzMfI';

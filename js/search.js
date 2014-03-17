@@ -31,12 +31,11 @@ function render_page(result){
             }
             else{
                 row.thumb = get_thumb(row)
-                tr = search_item_tmpl(row)
+                tr = search_item_tmpl(row).on('click', add_video_to_queue)
             }
             $('#search_queue').append(tr)
         }
         $('#search_queue .old').remove()
-        $('#search_queue .item').on('click', add_video_to_queue)
         $('#search_message').hide()
         $('#search_queue').show()
         current_search = null;

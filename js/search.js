@@ -3,21 +3,23 @@ function autocomplete(){
     if(current_search) current_search.abort()
     $('#search_queue').hide()
     search_query = $('#search_bar').val();
+    var my_query = search_query
     
     if(search_query){
         $('#search_message').text('Loading...').show()
-
-        current_search = $.ajax('https://content.googleapis.com/youtube/v3/search', {
-            dataType: 'jsonp',
-            data: {
-                q: search_query,
-                type: 'video',
-                part: 'id,snippet',
-                maxResults: 8,
-                fields: 'items(id(videoId),snippet(thumbnails,title))',
-                key: apiKey
-            }
-        }).done(render_page)
+        setTimeout(function(){ if(my_query == window.search_query){
+            current_search = $.ajax('https://content.googleapis.com/youtube/v3/search', {
+                dataType: 'jsonp',
+                data: {
+                    q: search_query,
+                    type: 'video',
+                    part: 'id,snippet',
+                    maxResults: 8,
+                    fields: 'items(id(videoId),snippet(thumbnails,title))',
+                    key: apiKey
+                }
+            }).done(render_page)
+        }}, 300)
     }
     else $('#search_message').text('Type a song to search').show()
 }
@@ -31,7 +33,7 @@ function render_page(result){
             }
             else{
                 row.thumb = get_thumb(row)
-                tr = search_item_tmpl(row).on('click', add_video_to_queue)
+                tr = $(search_item_tmpl(row)).on('click', add_video_to_queue)
             }
             $('#search_queue').append(tr)
         }
@@ -73,4 +75,5 @@ function leave_search(){
 apiKey = 'AIzaSyChJLHkrcdUPknA85oQwUHdVpssEmDzMfI';
 search_item_tmpl = _.template($('#__search_item_tmpl').html());
 current_search = null;
+search_query = '';
 $("#search_bar").on("input", autocomplete)

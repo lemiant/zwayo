@@ -3,7 +3,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link type="text/css" href="css/style.css" rel="stylesheet" />
     <link type="text/css" href="css/login.css" rel="stylesheet" />
-    <!-- Functions -->
+    <!-- We actually do want to block, since this page makes no sense without a secret name -->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
     <script type="text/javascript">
         function new_secret_name(){
             $.ajax({url: 'server/new_secret_name.php',
@@ -11,22 +12,13 @@
                    success: function(js){ if(js.result == 'success') $('#secret_name').html(js.secret_name); }
                 })
         }
-    </script>
-    <!-- Bootstrap -->
-    <script type="text/javascript" src="js/fallback.js"></script>
-    <script type="text/javascript">
-        fallback.load({
-            jQuery: ["//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"]
-        })
-        fallback.ready( function(){
-            $(document).ready(function(){
-                new_secret_name()
-                $('#refresh').on('click', new_secret_name)
-                $('#go').on('click', function(){
-                    tmpl = '<form action="server/do_make_party.php" method="POST"><input type="hidden" name="secret_name" value="'+$('#secret_name').html()+'" /></form>';
-                    form = $(tmpl);
-                    form.submit();
-                })
+        
+        $(document).ready(function(){
+            new_secret_name()
+            $('#refresh').on('click', new_secret_name)
+            $('#go').on('click', function(){
+                form = $('<form action="server/do_make_party.php" method="POST"><input type="hidden" name="secret_name" value="'+$('#secret_name').html()+'" /></form>');
+                form.submit();
             })
         })
     </script>

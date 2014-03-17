@@ -3,26 +3,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link type="text/css" href="css/style.css" rel="stylesheet" />
     <link type="text/css" href="css/index.css" rel="stylesheet" />
-    <script type="text/javascript" src="js/fallback.js"></script>
-    <script type="text/javascript">
-        fallback.load({
-            jQuery: ["//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"]
-        }
-        fallback.ready( function(){
-            $(document).ready(function(){
-                $('.party_name, .button').on('click', function(e){e.stopPropagation();})
-                $('div.item').on('click', function(){
-                    div = $(this)
-                    $('div.item.open').not(div).removeClass('open').find('div.extra').slideUp()
-                    div.addClass('open')
-                    div.find('div.extra').slideDown()
-                })
-                $('.submit').on('click', function(){
-                    $(this).closest('form').submit()  
-                })
-            })
-        })
-    </script>
 </head>
 <body>
 <div id="header">Zwayo</div>
@@ -48,6 +28,19 @@
             </div>
         </form></div>
     </div>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>    <script type="text/javascript">
+    $('.party_name, .button').on('click', function(e){e.stopPropagation();})
+    $('div.item').on('click', function(){
+        div = $(this)
+        $('div.item.open').not(div).removeClass('open').find('div.extra').slideUp()
+        div.addClass('open')
+        div.find('div.extra').slideDown()
+    })
+    $('.submit').on('click', function(){
+        $(this).closest('form').submit()  
+    })
+    </script>
 </body>
 </html>
 

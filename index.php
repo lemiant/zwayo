@@ -1,29 +1,28 @@
 <html>
 <head>
-    <meta name="viewport" content="width=device-width; initial-scale=1;">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link type="text/css" href="css/style.css" rel="stylesheet" />
-<link type='text/css' href='css/index.css' rel='stylesheet' media='screen' />
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.party_name, .button').on('click', function(e){e.stopPropagation(); e.preventDefault()})
-        $('div.item').on('click', function(){
-            div = $(this)
-            if(!div.hasClass('open')){
-                $('div.item.open').removeClass('open').find('div.extra').slideUp()
-                div.addClass('open')
-                div.find('div.extra').slideDown()
-            }
-            else{
-                div.removeClass('open')
-                div.find('div.extra').slideUp()
-            }
+    <link type="text/css" href="css/index.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/fallback.js"></script>
+    <script type="text/javascript">
+        fallback.load({
+            jQuery: ["//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"]
+        }
+        fallback.ready( function(){
+            $(document).ready(function(){
+                $('.party_name, .button').on('click', function(e){e.stopPropagation();})
+                $('div.item').on('click', function(){
+                    div = $(this)
+                    $('div.item.open').not(div).removeClass('open').find('div.extra').slideUp()
+                    div.addClass('open')
+                    div.find('div.extra').slideDown()
+                })
+                $('.submit').on('click', function(){
+                    $(this).closest('form').submit()  
+                })
+            })
         })
-        $('.submit').on('click', function(){
-            $(this).closest('form').submit()  
-        })
-    })
-</script>
+    </script>
 </head>
 <body>
 <div id="header">Zwayo</div>

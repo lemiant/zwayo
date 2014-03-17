@@ -1,4 +1,5 @@
-[
+<?php
+$animals = array(
     "ant",
     "bat",
     "bear",
@@ -32,4 +33,5 @@
     "whale",
     "wolf",
     "zebra"
-]
+);
+?>

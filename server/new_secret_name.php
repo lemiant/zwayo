@@ -5,7 +5,7 @@
     require_once('adjectives.php');
 
     function new_secret_name(){
-        global $adjectives, $animals;
+        global $adjectives, $animals, $con;
         $secret_name = $adjectives[array_rand($adjectives)].' '.$animals[array_rand($animals)];
         $query = "SELECT * FROM parties WHERE secret_name='$secret_name'";
         $result = mysqli_query($con, $query);

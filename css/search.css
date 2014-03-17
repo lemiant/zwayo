@@ -1,0 +1,52 @@
+#search_bar{
+    width: 93%;
+    background-color: #f2f2f2;
+    color: black;
+    font-family: veranda, sans-serif;
+    font-size:15px;
+    border: 3px solid #111111;
+    border-radius: 20px;
+    margin: auto;
+    padding: 0 7px;
+    position: relative;
+    display: block;
+    z-index: 1;
+}
+div#search_container{
+    height: 25px;
+    position: relative;
+    width: 90%;
+    margin: 10px auto;
+    display: block;
+}
+#search_wrapper .queue .item p.song_title{
+    color: #cccccc;
+    font-size: 13px;
+    margin: 3px;
+}
+#search_wrapper .search.item{
+    cursor: pointer;
+}
+#search_message {
+    color: #BBB;
+    text-align: center;
+}
+
+#close_button {
+    width: 18px;
+    height: 18px;
+    line-height:  18px;
+    border-radius:  50%;
+    text-align: center;
+    display: inline-block; 
+    position: absolute; 
+    top: 11px;
+    right: 3%; 
+    background-color: lightgrey; 
+    padding: 0; border: #444 solid 2px; 
+    cursor: pointer; 
+    font-family: Arial; 
+    font-size: 12px;
+    font-weight: bold;
+    color: black;
+}

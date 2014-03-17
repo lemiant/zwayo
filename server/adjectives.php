@@ -1,4 +1,5 @@
-[
+<?php
+$adjectives = array(
     "adorable",
     "adventurous",
     "aggressive",
@@ -226,4 +227,5 @@
     "wrong",
     "zany",
     "zealous"
-]
+);
+    ?>

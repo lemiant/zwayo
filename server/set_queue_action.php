@@ -18,4 +18,3 @@ else {
     mysqli_close($con);
     die($FAILURE);
 }
-?>

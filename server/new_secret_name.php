@@ -14,4 +14,4 @@
     }
 
     echo json_encode(array('result' => 'success', 'secret_name' => new_secret_name()))
-?>
+

@@ -31,7 +31,7 @@ function create($fb_id, $name){
     $secret = randomString(50);
     $query = "INSERT INTO users (fb_id, name, secret) VALUES ('$fb_id', '$name', '$secret')";
     mysqli_query($con, $query);
-    
+
     $USER_ID = mysqli_insert_id($con);
     setcookie("USER_ID", $USER_ID, time()+60*60*24*3000, '/');
     setcookie("secret", $secret, time()+60*60*24*3000, '/', '', '', TRUE);
@@ -45,7 +45,7 @@ function onward(){
         header("Location: server/join_party.php?secret_name=".strtolower($_SESSION['action_data']['party_name']));
         die();
     }
-    echo $USER_ID;  
+    echo $USER_ID;
     if(!empty($_SESSION))print_r($_SESSION);
 }
 
@@ -59,9 +59,9 @@ error_reporting(-1);
 if(!empty($_POST['action'])){
     session_start();
     $_SESSION['action_data'] = array("action"=>$_POST['action'], "party_name"=>$_POST['party_name']);
-}   
+}
 if($USER_ID){
-    onward(); 
+    onward();
     exit;
 }
 else {

@@ -10,9 +10,8 @@
     if($row = mysqli_fetch_assoc($result)){
         $query = "UPDATE users SET current_party=".$row['id']." WHERE id=$USER_ID";
         mysqli_query($con, $query);
-        
+
         header("Location: ../queue.php");
         die();
     }
     else echo "Not a party";
-?>

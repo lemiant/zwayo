@@ -228,4 +228,3 @@ $adjectives = array(
     "zany",
     "zealous"
 );
-    ?>

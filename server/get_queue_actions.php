@@ -46,4 +46,3 @@ if($PARTY_ID){
 else{
     die($FAILURE);
 }
-?>

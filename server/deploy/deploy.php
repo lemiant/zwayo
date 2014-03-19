@@ -279,7 +279,7 @@ if (defined('USE_COMPOSER') && USE_COMPOSER === true) {
 
 //CUSTOM
 if(!empty($PRE_SYNC_COMMANDS)){
-    $commands = array_merge($commands, PRE_SYNC_COMMANDS);
+    $commands = array_merge($commands, $PRE_SYNC_COMMANDS);
 }
 
 // ==================================================[ Deployment ]===

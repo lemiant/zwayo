@@ -4,7 +4,7 @@
     <link type="text/css" href="css/style.css" rel="stylesheet" />
     <link type="text/css" href="css/login.css" rel="stylesheet" />
     <!-- We actually do want to block, since this page makes no sense without a secret name -->
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript">
         function new_secret_name(){
             $.ajax({url: 'server/new_secret_name.php',
@@ -12,7 +12,7 @@
                    success: function(js){ if(js.result == 'success') $('#secret_name').html(js.secret_name); }
                 })
         }
-        
+
         $(document).ready(function(){
             new_secret_name()
             $('#refresh').on('click', new_secret_name)

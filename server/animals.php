@@ -34,4 +34,3 @@ $animals = array(
     "wolf",
     "zebra"
 );
-?>

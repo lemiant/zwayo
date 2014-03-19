@@ -77,4 +77,4 @@ function randomString($length = 10) {
 }
 
 $FAILURE = json_encode(array("result" => "failure"));
-?>
+

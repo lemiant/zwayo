@@ -7,11 +7,11 @@
 <body>
 <div id="header">Zwayo</div>
     <div id="make_party" class="item padded">
-        <h2 onclick="">Make a Party</h2>
+       <!-- <h2 onclick="">Make a Party</h2> -->
             <div class="extra">
                 <form action="login.php" method="POST">
                     <input type="hidden" name="action" value="make_party"/>
-                    <input type="text" class="party_name rounded" name="party_name" placeholder="Your Party Name" /><br />
+                    <input type="hidden" class="party_name rounded" name="party_name" placeholder="Your Party Name" /><br />
                     <a class="button submit" onclick="make_party(event)">Make Party</a>
                 </form>
             </div>
@@ -29,7 +29,7 @@
         </form></div>
     </div>
 
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>    
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
     $('.party_name, .button').on('click', function(e){e.stopPropagation();})
     $('div.item').on('click', function(){
@@ -39,7 +39,7 @@
         div.find('div.extra').slideDown()
     })
     $('.submit').on('click', function(){
-        $(this).closest('form').submit()  
+        $(this).closest('form').submit()
     })
     </script>
 </body>

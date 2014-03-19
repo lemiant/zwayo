@@ -7,7 +7,7 @@
 <body>
 <div id="header">Zwayo</div>
     <div id="make_party" class="item padded">
-       <!-- <h2 onclick="">Make a Party</h2> -->
+       <h2 onclick="">Make a Party</h2>
             <div class="extra">
                 <form action="login.php" method="POST">
                     <input type="hidden" name="action" value="make_party"/>

@@ -13,5 +13,5 @@
         else return $secret_name; //No Collision :)
     }
 
-    echo json_encode(array('result' => 'success', 'secret_name' => new_secret_name()))
+    echo json_encode(array('result' => 'success', 'secret_name' => new_secret_name()));
 

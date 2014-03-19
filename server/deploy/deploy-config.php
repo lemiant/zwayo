@@ -5,6 +5,7 @@ $PRE_SYNC_COMMANDS = array(
     "mv /var/www/staging/server/production_settings.php /var/www/staging/server/active_settings.php"
 );
 
+define('NO_DEPLOY_FLAG', '--no-deploy');
 
 /**
  * Deployment configuration

@@ -9,10 +9,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-function connect_to_mch(){
-    return mysqli_connect("localhost","root","","mch");
-    //return mysqli_connect("localhost","root","safeway","mch");
-}
+require_once('active_settings.php');
+
 function check_party_id($con, $party_id){
     $query = "SELECT id FROM parties WHERE id='$party_id'";
     $result = mysqli_query($con, $query);

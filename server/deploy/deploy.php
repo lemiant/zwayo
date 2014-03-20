@@ -176,6 +176,12 @@ $payload = json_decode($_POST['payload']);
 if ($payload->ref != 'refs/heads/'.BRANCH){
     die("<h2>This was a commit to a branch that does not deploy</h2>");
 }
+if ($payload->ref != 'refs/heads/'.BRANCH){
+    die("<h2>This was a commit to a branch that does not deploy</h2>");
+}
+if (defined('AUTHOR') and $payload->commits[0]->author->name != AUTHOR){
+    die("<h2>Only Alex has auto-deploy turned on</h2>");
+}
 if(defined('NO_DEPLOY_FLAG') and NO_DEPLOY_FLAG and
    strpos($payload->commits[0]->message, NO_DEPLOY_FLAG) !== false){
     die("<h2>Had no deploy flag</h2>");

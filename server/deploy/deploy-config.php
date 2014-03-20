@@ -7,6 +7,8 @@ $PRE_SYNC_COMMANDS = array(
 
 define('NO_DEPLOY_FLAG', '--no-deploy');
 
+define('AUTHOR', 'Alex Rodrigues');
+
 /**
  * Deployment configuration
  *

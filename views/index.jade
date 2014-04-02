@@ -1,0 +1,37 @@
+html
+    head
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(href="css/style.css" rel="stylesheet")
+        link(href="css/index.css" rel="stylesheet")
+        
+    body
+        #header Zwayo
+        
+        #make_party.item.padded
+            h2 Make a Party
+            .extra
+                form(action="login.php", method="POST")
+                    input(type="hidden", name="action", value="make_party")
+                    input(type="hidden", name="party_name")
+                    a.button.submit Make Party
+                        
+        #join_party.item.padded
+            h2 Join a Party
+            .extra(style="display: block;")
+                form(action="login.php", method="POST")
+                    input(type="hidden", name="action" value="join_party")
+                    input.party_name.rounded(type="text",  name="party_name", placeholder="Secret Name")
+                    br
+                    a.button.submit Let's Party!
+
+        script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
+        script.
+            $('.party_name, .button').on('click', function(e){e.stopPropagation();})
+            $('div.item').on('click', function(){
+                div = $(this)
+                $('div.item').not(div).find('div.extra').slideUp()
+                div.find('div.extra').slideDown()
+            })
+            $('.submit').on('click', function(){
+                $(this).closest('form').submit()
+            })

@@ -1,0 +1,14 @@
+link(rel="stylesheet", href="css/search.css")
+#search_wrapper(style="display:none")
+    #search_container
+        input#search_bar(type="text")
+    #close_button(onclick="leave_search()") X
+
+    #search_message Type a song to search
+    #search_queue.queue
+        script(id="__search_item_tmpl" type="text/html")
+            .search.item(id="{{id.videoId}}")
+                img(src="{{thumb}}")
+                p.song_title {{snippet.title.ellipsis_truncate(90)}}
+
+    script(src="js/search.js")

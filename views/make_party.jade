@@ -1,0 +1,34 @@
+html
+    head
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="css/style.css")
+        link(rel="stylesheet", href="css/login.css")
+        //- We actually do want to block, since this page makes no sense without a secret name
+        script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
+        script.
+            function new_secret_name(){
+                $.ajax({url: 'server/new_secret_name.php',
+                   dataType: 'json',
+                   success: function(js){ if(js.result == 'success') $('#secret_name').html(js.secret_name); }
+                })
+            }
+
+            $(document).ready(function(){
+                new_secret_name()
+                $('#refresh').on('click', new_secret_name)
+                $('#go').on('click', function(){
+                    form = $('<form action="server/do_make_party.php" method="POST"><input type="hidden" name="secret_name" value="'+$('#secret_name').html()+'" /></form>');
+                    form.submit();
+                })
+            })
+
+    body
+        #wrapper: #cell: #inner(style="height: 180px")
+            p Your party has a secret name:
+            div
+                #secret_name.big
+                #refresh.big
+                    img(src="imgs/refresh.png" style="height: 30px; margin-top: 4px;")
+
+            p Give this to anyone you want to join the party.
+            #go.button Sounds Good!

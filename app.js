@@ -8,6 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var api_router = require('zw_api/router')
 
 var app = express();
 
@@ -31,7 +32,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/users', user.list);
-app.get('/api/*', routes.api);
+app.get('/api/*', api_router);
 app.get('*', routes.static_views);
 
 

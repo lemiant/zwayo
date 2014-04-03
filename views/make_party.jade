@@ -7,7 +7,7 @@ html
         script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
         script.
             function new_secret_name(){
-                $.ajax({url: 'server/new_secret_name.php',
+                $.ajax({url: '/api/secret_name',
                    dataType: 'json',
                    success: function(js){ if(js.result == 'success') $('#secret_name').html(js.secret_name); }
                 })

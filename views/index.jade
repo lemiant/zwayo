@@ -1,37 +1,50 @@
-html
+doctype html
+html(lang='en')
     head
-        meta(name="viewport", content="width=device-width, initial-scale=1")
+        //-Compatibility
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        
+        //- Title and Icon
+        //- link(rel='shortcut icon', href='')
+        title Zwayo
+        
+        //- Latest compiled and minified CSS
+        link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
+        
+        //- CSS
         link(href="css/style.css" rel="stylesheet")
         link(href="css/index.css" rel="stylesheet")
-        
+        link(href="css/cover.css" rel="stylesheet")
     body
-        #header Zwayo
-        
-        #make_party.item.padded
-            h2 Make a Party
-            .extra
-                form(action="login.php", method="POST")
-                    input(type="hidden", name="action", value="make_party")
-                    input(type="hidden", name="party_name")
-                    a.button.submit Make Party
-                        
-        #join_party.item.padded
-            h2 Join a Party
-            .extra(style="display: block;")
-                form(action="login.php", method="POST")
-                    input(type="hidden", name="action" value="join_party")
-                    input.party_name.rounded(type="text",  name="party_name", placeholder="Secret Name")
-                    br
-                    a.button.submit Let's Party!
-
-        script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
-        script.
-            $('.party_name, .button').on('click', function(e){e.stopPropagation();})
-            $('div.item').on('click', function(){
-                div = $(this)
-                $('div.item').not(div).find('div.extra').slideUp()
-                div.find('div.extra').slideDown()
-            })
-            $('.submit').on('click', function(){
-                $(this).closest('form').submit()
-            })
+        .site-wrapper
+          .site-wrapper-inner
+            .cover-container
+              .masthead.clearfix
+                .inner
+                  h3.tech.masthead-brand Zwayo
+                  ul.nav.masthead-nav
+                    li#menuMake.active
+                      a(href='#', id='linkMake') Make
+                    li#menuJoin
+                      a(href='#', id='linkJoin') Join
+              .inner.cover
+                #make
+                    form(action="login.php", method="POST").form-signin(role='form')
+                        h2.form-signin-heading Make a party
+                        a.btn.btn-lg.btn-default.btn-block.submit Make Party
+                #join(style= "display: none")
+                    form(action="login.php", method="POST").form-signin(role='form')
+                        h2.form-signin-heading Join the Party
+                        input.form-control(type='text', placeholder='Secret Name', required='required', autofocus='autofocus')
+                        br
+                        a.btn.btn-lg.btn-default.btn-block.submit Let's Party!
+    
+        //-script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
+        //- jQuery (necessary for Bootstrap's JavaScript plugins)
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+        //- Bootstrap core JavaScript
+        script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
+        //- add JS here
+        script(src='js/actions.js')

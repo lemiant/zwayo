@@ -7,44 +7,48 @@ html(lang='en')
         meta(name='viewport', content='width=device-width, initial-scale=1')
         
         //- Title and Icon
-        //- link(rel='shortcut icon', href='')
+        link(rel='shortcut icon', href='imgs/icon/icon.png')
         title Zwayo
         
         //- Latest compiled and minified CSS
         link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
         
         //- CSS
-        link(href="css/style.css" rel="stylesheet")
-        link(href="css/index.css" rel="stylesheet")
         link(href="css/cover.css" rel="stylesheet")
+        link(href="css/index.css" rel="stylesheet")
     body
         .site-wrapper
           .site-wrapper-inner
             .cover-container
               .masthead.clearfix
                 .inner
-                  h3.tech.masthead-brand Zwayo
-                  ul.nav.masthead-nav
+                  a(href="#").deselect
+                    img(src='imgs/icon/logo2.png').logo.masthead-brand
+                    h3.tech.masthead-brand Zwayo
+                  ul.nav.masthead-nav.deselect
                     li#menuMake.active
                       a(href='#', id='linkMake') Make
                     li#menuJoin
                       a(href='#', id='linkJoin') Join
               .inner.cover
                 #make
-                    form(action="login.php", method="POST").form-signin(role='form')
-                        h2.form-signin-heading Make a party
-                        a.btn.btn-lg.btn-default.btn-block.submit Make Party
+                    form(action="login.php", method="POST").form-party(role='form')
+                        h2.form-party-heading.deselect Make a party
+                        a.btn.btn-lg.btn-default.btn-block.submit Start the party!
                 #join(style= "display: none")
-                    form(action="login.php", method="POST").form-signin(role='form')
-                        h2.form-signin-heading Join the Party
+                    form(action="login.php", method="POST").form-party(role='form')
+                        h2.form-party-heading.deselect Join the Party
                         input.form-control(type='text', placeholder='Secret Name', required='required', autofocus='autofocus')
                         br
-                        a.btn.btn-lg.btn-default.btn-block.submit Let's Party!
+                        a.btn.btn-lg.btn-default.btn-block.submit Let's party!
+              .mastfoot
+                .inner
+                    p © 2014 Zwayo
     
-        //-script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
         //- jQuery (necessary for Bootstrap's JavaScript plugins)
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
         //- Bootstrap core JavaScript
         script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
         //- add JS here
+        script(src='js/index.js')
         script(src='js/actions.js')

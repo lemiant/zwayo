@@ -1,3 +1,7 @@
+.add-songs {
+    padding: 15px;
+    margin: 0 auto;
+}
 .queue div.item{
     height: 60px;
 }
@@ -17,21 +21,8 @@
     margin: 5px 0 2px 0;
 }
 .queue div.active, .queue div.item#player_div{
-    background-color: #8A360F;
+    background-color: #bf2015;
 }
 .queue div.item#player_div{
     height: 210px;
-}
-
-#add_music_button{
-    border-top: solid black 1px;
-    border-bottom: solid black 1px;
-    width: 100%;
-    display: block;
-    text-align: center;
-    background-color: #B86E00;
-    padding: 5px;
-    color: black;
-    font-weight: bold;
-    padding: 5px 0;
 }

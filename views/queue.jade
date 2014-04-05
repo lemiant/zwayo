@@ -1,31 +1,64 @@
 html
     head
-        meta(name="viewport", content="width=device-width, initial-scale=1")
-        link(rel="stylesheet", href="css/style.css")
-        link(rel="stylesheet", href="css/queue.css")
-        style(type="text/css").
-            body{
-                user-select: none;
-                -moz-user-select: none;
-                -webkit-user-select: none;
-            }
-    body
-    #fb-root
-    #queue_wrapper
-        a#add_music_button(href="#") + Add Music
-
-        #queue.queue
-            script(id="__queue_item_tmpl", type="text/html")
-                div.item(id="{{id}}")
-                    img(src="{{body.thumb}}")
-                    p.song_title {{body.title.ellipsis_truncate(60)}}
-                    p.song_guest Added by {{body.guest.ellipsis_truncate(30)}}
-
-            #player_div.item(style="display:none")
-                #player
-
-        #play_button_div(style="padding: 8px; text-align:center; display: none;")
-            a#play.button &nbsp;Play All&nbsp;
+        //-Compatibility
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        
+        //- Title and Icon
+        link(rel='shortcut icon', href='imgs/icon/icon.png')
+        title Zwayo
+        
+        //- Latest compiled and minified CSS
+        link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
+        
+        //- CSS
+        link(href="css/cover.css" rel="stylesheet")
+        link(href="css/queue.css" rel="stylesheet")
+    body.deselect
+        .site-wrapper
+          .site-wrapper-inner
+            .cover-container
+              .masthead.clearfix
+                .inner
+                  a(href="#").deselect
+                    img(src='imgs/icon/logo2.png').logo.masthead-brand
+                    h3.tech.masthead-brand Zwayo
+                  ul.nav.masthead-nav.deselect
+                    li#menuPrevious.active
+                      a(href='#', id='linkPrevious')
+                        img(src='imgs/nav/previous.png')
+                    li#menuPlayPause
+                      a(href='#', id='linkPlayPause')
+                        img(src='imgs/nav/play.png').playPause
+                    li#menuNext
+                      a(href='#', id='linkNext')
+                        img(src='imgs/nav/next.png')
+              .inner.cover
+                  #queue_wrapper.add-songs
+                    a.btn.btn-lg.btn-default.btn-block + Add Music
+                    //- TODO: the rest is totally broken right now
+                    #queue.queue
+                        script(id="__queue_item_tmpl", type="text/html")
+                            div.item(id="{{id}}")
+                                img(src="{{body.thumb}}")
+                                p.song_title {{body.title.ellipsis_truncate(60)}}
+                                p.song_guest Added by {{body.guest.ellipsis_truncate(30)}}
+                        #player_div.item(style="display:none")
+                            #player
+                    #play_button_div(style="padding: 8px; text-align:center; display: none;")
+                        a#play.btn.btn-lg.btn-default.btn-block &nbsp;Play All&nbsp;
+              .mastfoot
+                .inner
+                    p © 2014 Zwayo
+    
+    
+    //- jQuery (necessary for Bootstrap's JavaScript plugins)
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+    //- Bootstrap core JavaScript
+    script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
+    //- add JS here
+    script(src='js/actions.js')
 
     //- Script loading functions
     script.
@@ -57,7 +90,6 @@ html
             }
         }
 
-    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
     //- Rendering Functions
     script.
         last_update = 0

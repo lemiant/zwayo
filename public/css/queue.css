@@ -2,6 +2,12 @@
     padding: 15px;
     margin: 0 auto;
 }
+.btn-play{
+    max-width: 200px;
+    text-align: center;
+    display: inline-block;
+}
+
 .queue div.item{
     height: 60px;
 }

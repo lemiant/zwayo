@@ -10,6 +10,12 @@ var http = require('http');
 var path = require('path');
 var api_router = require('zw_api/router')
 
+// Mongo Stuff ///////////////////////
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/nodetest');
+//////////////////////////////////////
+
 var app = express();
 
 // all environments
@@ -31,11 +37,14 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/users', user.list);
-app.get('/api/*', api_router);
+app.get('/list', routes.list(db));
+app.get('/api/*', function(q,r,n){ api_router(q,r,n,db) });
 app.get('*', routes.static_views);
-
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+
+
+

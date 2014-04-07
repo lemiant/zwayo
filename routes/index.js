@@ -17,3 +17,13 @@ exports.static_views = function(req, res, next){
     })
 }
 
+exports.list = function(db){
+    return function(req, res) {
+        var collection = db.get('parties');
+        collection.find({},{},function(e,docs){
+            res.render('list', {
+                "list" : docs
+            });
+        });
+    };
+}

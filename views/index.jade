@@ -7,7 +7,7 @@ html(lang='en')
         meta(name='viewport', content='width=device-width, initial-scale=1')
         
         //- Title and Icon
-        link(rel='shortcut icon', href='imgs/icon/zIcon2.png')
+        link(rel='shortcut icon', href='imgs/icon/zIcon3.png')
         title Zwayo
         
         //- Latest compiled and minified CSS
@@ -23,7 +23,7 @@ html(lang='en')
               .masthead.clearfix
                 .inner
                   a(href="#").deselect
-                    img(src='imgs/icon/zIcon2.png', height="48px", width="48px").logo.masthead-brand
+                    img(src='imgs/icon/zIcon3.png', height="48px", width="57px").logo.masthead-brand
                     h3.tech.masthead-brand Zwayo
                   ul.nav.masthead-nav.deselect
                     li#menuMake.active
@@ -32,17 +32,17 @@ html(lang='en')
                       a(href='#', id='linkJoin') Join
               .inner.cover
                 #make
-                    form(action="login.php", method="POST").form-party(role='form')
+                    form(role='form', action="login.php", method="POST").form-party
                         h2.form-party-heading.deselect Make a party
                         a.btn.btn-lg.btn-default.btn-block.submit Start the party!
                 #join(style= "display: none")
-                    form(action="login.php", method="POST").form-party(role='form')
+                    form(role='form', action="login.php", method="POST").form-party
                         h2.form-party-heading.deselect Join the Party
                         input.form-control(type='text', placeholder='Secret Name', required='required', autofocus='autofocus')
                         br
                         a.btn.btn-lg.btn-default.btn-block.submit Let's party!
               .mastfoot
-                .inner
+                .inner.deselect
                     p © 2014 Zwayo
     
         //- jQuery (necessary for Bootstrap's JavaScript plugins)

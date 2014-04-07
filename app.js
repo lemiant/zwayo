@@ -33,7 +33,11 @@ if ('development' == app.get('env')) {
 
 app.get('/users', user.list);
 app.get('/api/*', api_router);
+app.get('/', function(req, res){
+  res.redirect('/index');
+});
 app.get('*', routes.static_views);
+
 
 
 http.createServer(app).listen(app.get('port'), function(){

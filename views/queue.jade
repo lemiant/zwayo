@@ -6,7 +6,7 @@ html
         meta(name='viewport', content='width=device-width, initial-scale=1')
         
         //- Title and Icon
-        link(rel='shortcut icon', href='imgs/icon/zIcon.png')
+        link(rel='shortcut icon', href='imgs/icon/zIcon3.png')
         title Zwayo
         
         //- Latest compiled and minified CSS
@@ -21,9 +21,10 @@ html
             .cover-container
               .masthead.clearfix
                 .inner
-                  a(href="#").deselect
-                    img(src='imgs/icon/zIcon.png', height="48px", width="48px").logo.masthead-brand
+                  a(href="/index", id="linkHome").deselect
+                    img.logo.masthead-brand(src='imgs/icon/zIcon3.png', height="48px", width="57px")
                     h3.tech.masthead-brand Zwayo
+                    //- TODO: fix link to index
                   ul.nav.masthead-nav.deselect
                     li#menuPrevious.active
                       a(href='#', id='linkPrevious')

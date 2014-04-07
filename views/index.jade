@@ -22,8 +22,8 @@ html(lang='en')
             .cover-container
               .masthead.clearfix
                 .inner
-                  a(href="#").deselect
-                    img(src='imgs/icon/zIcon3.png', height="48px", width="57px").logo.masthead-brand
+                  a(href="#", id="home").deselect
+                    img.logo.masthead-brand(src='imgs/icon/zIcon3.png', height="48px", width="57px")
                     h3.tech.masthead-brand Zwayo
                   ul.nav.masthead-nav.deselect
                     li#menuMake.active
@@ -32,13 +32,13 @@ html(lang='en')
                       a(href='#', id='linkJoin') Join
               .inner.cover
                 #make
-                    form(role='form', action="login.php", method="POST").form-party
-                        h2.form-party-heading.deselect Make a party
+                    form.form-party.deselect(role='form', action="login.php", method="POST")
+                        h2.form-party-heading Make a party
                         a.btn.btn-lg.btn-default.btn-block.submit Start the party!
                 #join(style= "display: none")
-                    form(role='form', action="login.php", method="POST").form-party
-                        h2.form-party-heading.deselect Join the Party
-                        input.form-control(type='text', placeholder='Secret Name', required='required', autofocus='autofocus')
+                    form.form-party.deselect(role='form', action="login.php", method="POST")
+                        h2.form-party-heading Join the Party
+                        input.form-control(type='text', name="name", id="name", placeholder='Secret Name', required='required', autofocus='autofocus')
                         br
                         a.btn.btn-lg.btn-default.btn-block.submit Let's party!
               .mastfoot

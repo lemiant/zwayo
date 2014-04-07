@@ -1,5 +1,9 @@
 "use strict";
 $(document).ready(function () {
+    var locked = false;
+    function unlock() {
+        locked = false;
+    }
     function index(target, targetMenu) {
         var last, lastMenu;
         // Find previous values
@@ -53,11 +57,20 @@ $(document).ready(function () {
     }
     
     $("a").click(function (event) {
+        if (locked) {
+            return false;
+        }
+        
         var target, targetMenu, type, active;
         
         // Find new values
         switch (event.currentTarget.id) {
         case "linkMake":
+            target = $("#make");
+            targetMenu = $("#menuMake");
+            type = "index";
+            break;
+        case "home":
             target = $("#make");
             targetMenu = $("#menuMake");
             type = "index";
@@ -101,6 +114,8 @@ $(document).ready(function () {
         default:
             return false;
         }
+        locked = true;
+        setTimeout(unlock, 750);
         return false;
     });
 });

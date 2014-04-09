@@ -10,8 +10,18 @@
     font-size: 44px;
 }
 .logo {
+/*
+    color: #fff;
+    border-bottom-color: rgba(255,255,255,0);
+    background-color: transparent;
+*/
+}
+.logo .icon {
     display: inline-block;
     padding-right: 15px;
+}
+.logo .text {
+/*    */
 }
 .deselect {
     -webkit-touch-callout: none;
@@ -153,7 +163,7 @@ body {
  * Affix and center
  */
 
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {*/
   /* Pull out the header and footer */
   .masthead {
     position: fixed;
@@ -171,14 +181,22 @@ body {
   .masthead,
   .mastfoot,
   .cover-container {
-    width: 100%; /* Must be percentage or pixels for horizontal alignment */
+    width: 90%; /* Must be percentage or pixels for horizontal alignment */
   }
-}
+/*}*/
 
-@media (min-width: 992px) {
+@media (min-width: 1080px) {
   .masthead,
   .mastfoot,
   .cover-container {
-    width: 900px;
+    width: 70%;
+  }
+}
+
+@media (min-width: 2000px) {
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 60%;
   }
 }

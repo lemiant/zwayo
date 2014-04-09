@@ -13,35 +13,33 @@ html
         link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
         
         //- CSS
-        link(href="css/cover.css", rel="stylesheet")
-        link(href="css/queue.css" rel="stylesheet")
+        link(rel='stylesheet', href='css/cover.css')
+        link(rel='stylesheet', href='css/queue.css')
     body.deselect
         .site-wrapper
           .site-wrapper-inner
             .cover-container
               #navbar.masthead.clearfix
                 .inner
-                  a(href="/index", id="linkHome").deselect
-                    img.logo.masthead-brand(src='imgs/icon/zIcon.png', height="48px", width="57px")
-                    h3.tech.masthead-brand Zwayo
-                    //- TODO: fix link to index
-                  ul.nav.masthead-nav.deselect
+                  a#linkHome.logo(href="/index")
+                    img.masthead-brand.icon(src='imgs/icon/zIcon.png', height='48px', width='57px')
+                    h3.masthead-brand.text.tech Zwayo
+                  ul.nav.masthead-nav
                     li#menuPrevious.active
-                      a(href='#', id='linkPrevious')
+                      a#linkPrevious(href='#')
                         img(src='imgs/nav/previous.png')
                     li#menuPlayPause
-                      a(href='#', id='linkPlayPause')
-                        img(src='imgs/nav/play.png').playPause
+                      a#linkPlayPause(href='#')
+                        img.playPause(src='imgs/nav/play.png')
                     li#menuNext
-                      a(href='#', id='linkNext')
+                      a#linkNext(href='#')
                         img(src='imgs/nav/next.png')
               #container.inner.cover
                   #search_bar.add-songs
-                    //- TODO: add bar
-                    form.form-inline.form-top(role="form")
+                    form.form-inline(role='form')
                         .form-group
-                            label.sr-only(for="searchinput") Search for songs
-                            input.input-lg.search-query(id="searchinput", name="searchinput", type="text", placeholder="Search for songs", style="color: #000")
+                            label.sr-only(for='searchinput') Search for songs
+                            input#searchinput.input-lg.search-query(name='searchinput', type='text', placeholder='Search for songs', style='color: #000')
                         a.btn.btn-lg.btn-default.submit Add to playlist
                   #queue
               .mastfoot
@@ -50,13 +48,9 @@ html
     
     
     //- jQuery (necessary for Bootstrap's JavaScript plugins)
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js")
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
     //- Bootstrap core JavaScript
     script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
-    //- Initialize Underscore template syntax
-    //script(src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js")
-    //- external libs
-    //script(src="js/jquery.doubletap.js")
     //- add JS here
     script(src='js/actions.js')
     script(src='js/queue.js')

@@ -112,6 +112,10 @@ $(document).ready(function () {
             type = "redirect";
             url = "/index";
             break;
+        case "linkQueue":
+            type = "redirect";
+            url = "/queue";
+            break;
         default:
             return false;
         }

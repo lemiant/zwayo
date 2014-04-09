@@ -6,23 +6,23 @@ html
         meta(name='viewport', content='width=device-width, initial-scale=1')
         
         //- Title and Icon
-        link(rel='shortcut icon', href='imgs/icon/zIcon3.png')
+        link(rel='shortcut icon', href='imgs/icon/zIcon.png')
         title Zwayo
         
         //- Latest compiled and minified CSS
         link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
         
         //- CSS
-        link(href="css/cover.css" rel="stylesheet")
+        link(href="css/cover.css", rel="stylesheet")
         link(href="css/queue.css" rel="stylesheet")
     body.deselect
         .site-wrapper
           .site-wrapper-inner
             .cover-container
-              .masthead.clearfix
+              #navbar.masthead.clearfix
                 .inner
                   a(href="/index", id="linkHome").deselect
-                    img.logo.masthead-brand(src='imgs/icon/zIcon3.png', height="48px", width="57px")
+                    img.logo.masthead-brand(src='imgs/icon/zIcon.png', height="48px", width="57px")
                     h3.tech.masthead-brand Zwayo
                     //- TODO: fix link to index
                   ul.nav.masthead-nav.deselect
@@ -35,10 +35,14 @@ html
                     li#menuNext
                       a(href='#', id='linkNext')
                         img(src='imgs/nav/next.png')
-              .inner.cover
+              #container.inner.cover
                   #search_bar.add-songs
                     //- TODO: add bar
-                    a.btn.btn-lg.btn-default.btn-block + Add Music
+                    form.form-inline.form-top(role="form")
+                        .form-group
+                            label.sr-only(for="searchinput") Search for songs
+                            input.input-lg.search-query(id="searchinput", name="searchinput", type="text", placeholder="Search for songs", style="color: #000")
+                        a.btn.btn-lg.btn-default.submit Add to playlist
                   #queue
               .mastfoot
                 .inner
@@ -55,4 +59,4 @@ html
     //script(src="js/jquery.doubletap.js")
     //- add JS here
     script(src='js/actions.js')
-    //script(src='js/queue.js')
+    script(src='js/queue.js')

@@ -1,14 +1,13 @@
+/*
+ * Additions go here
+ */
 .form-party {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
-.form-party .form-party-heading,
-.form-party .checkbox {
+.form-party .form-party-heading {
   margin-bottom: 10px;
-}
-.form-party .checkbox {
-  font-weight: normal;
 }
 .form-party .form-control {
   position: relative;
@@ -21,4 +20,8 @@
 }
 .form-party .form-control:focus {
   z-index: 2;
+}
+
+h2{
+    font-weight: inherit;
 }

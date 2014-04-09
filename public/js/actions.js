@@ -4,7 +4,12 @@ $(document).ready(function () {
     function unlock() {
         locked = false;
     }
-    function index(target, targetMenu) {
+    
+    $('.submit').click(function (event) {
+        $(this).closest('form').submit();
+    });
+    
+    function index(target, targetMenu, id) {
         var last, lastMenu;
         // Find previous values
         if ($("#menuMake").hasClass("active")) {
@@ -21,7 +26,11 @@ $(document).ready(function () {
         last.fadeOut(500);
         lastMenu.removeClass("active");
         // add
-        target.delay(500).fadeIn(500);
+        target.delay(500).fadeIn(500, function () {
+            if (id !== "") {
+                id.focus();
+            }
+        });
         targetMenu.addClass("active");
     }
     
@@ -56,28 +65,35 @@ $(document).ready(function () {
         }
     }
     
+    function redirect(url) {
+        window.location.href = url;
+    }
+    
     $("a").click(function (event) {
         if (locked) {
             return false;
         }
         
-        var target, targetMenu, type, active;
+        var target, targetMenu, type, active, url, id;
         
         // Find new values
         switch (event.currentTarget.id) {
         case "linkMake":
             target = $("#make");
             targetMenu = $("#menuMake");
+            id = "";
             type = "index";
             break;
         case "home":
             target = $("#make");
             targetMenu = $("#menuMake");
+            id = "";
             type = "index";
             break;
         case "linkJoin":
             target = $("#join");
             targetMenu = $("#menuJoin");
+            id = $("#name");
             type = "index";
             break;
         case "linkPrevious":
@@ -92,30 +108,43 @@ $(document).ready(function () {
             targetMenu = $("#menuNext");
             type = "queue";
             break;
+        case "linkHome":
+            type = "redirect";
+            url = "/index";
+            break;
         default:
             return false;
         }
         
         active = targetMenu.hasClass("active");
+        locked = true;
         
         switch (type) {
         case "index":
             if (active) {
+                locked = false;
                 return false;
             }
-            index(target, targetMenu);
+            index(target, targetMenu, id);
+            setTimeout(unlock, 800);
             break;
         case "queue":
             if (active && !targetMenu.is("#menuPlayPause")) {
+                locked = false;
                 return false;
+            } else if (active && targetMenu.is("#menuPlayPause")) {
+                locked = false;
+            } else {
+                setTimeout(unlock, 300);
             }
             queue(targetMenu);
+            break;
+        case "redirect":
+            redirect(url);
             break;
         default:
             return false;
         }
-        locked = true;
-        setTimeout(unlock, 750);
         return false;
     });
 });

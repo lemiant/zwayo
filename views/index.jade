@@ -7,15 +7,15 @@ html(lang='en')
         meta(name='viewport', content='width=device-width, initial-scale=1')
         
         //- Title and Icon
-        link(rel='shortcut icon', href='imgs/icon/zIcon3.png')
+        link(rel='shortcut icon', href='imgs/icon/zIcon.png')
         title Zwayo
         
         //- Latest compiled and minified CSS
         link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
         
         //- CSS
-        link(href="css/cover.css" rel="stylesheet")
-        link(href="css/index.css" rel="stylesheet")
+        link(href="css/cover.css", rel="stylesheet")
+        link(href="css/index.css", rel="stylesheet")
     body
         .site-wrapper
           .site-wrapper-inner
@@ -23,14 +23,14 @@ html(lang='en')
               .masthead.clearfix
                 .inner
                   a(href="#", id="home").deselect
-                    img.logo.masthead-brand(src='imgs/icon/zIcon3.png', height="48px", width="57px")
+                    img.logo.masthead-brand(src='imgs/icon/zIcon.png', height="48px", width="57px")
                     h3.tech.masthead-brand Zwayo
                   ul.nav.masthead-nav.deselect
                     li#menuMake.active
                       a(href='#', id='linkMake') Make
                     li#menuJoin
                       a(href='#', id='linkJoin') Join
-              .inner.cover
+              .inner.cover.robo
                 #make
                     form.form-party.deselect(role='form', action="login.php", method="POST")
                         h2.form-party-heading Make a party
@@ -38,7 +38,7 @@ html(lang='en')
                 #join(style= "display: none")
                     form.form-party.deselect(role='form', action="login.php", method="POST")
                         h2.form-party-heading Join the Party
-                        input.form-control(type='text', name="name", id="name", placeholder='Secret Name', required='required', autofocus='autofocus')
+                        input#name.form-control(type='text', name="name", placeholder='Secret Name', required='required', autofocus='autofocus')
                         br
                         a.btn.btn-lg.btn-default.btn-block.submit Let's party!
               .mastfoot

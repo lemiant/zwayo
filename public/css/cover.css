@@ -1,10 +1,12 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:300,700);
+@import url(fonts/Trench.otf);
+
 /*
- * Additions go here
+ * Globals
  */
 
 .tech {
-    font-family: trench;
-    src: url("fonts/trench.otf") format("opentype");
+    font-family: 'Trench';
     font-size: 44px;
 }
 .logo {
@@ -19,10 +21,6 @@
     -ms-user-select: none;
     user-select: none;
 }
-
-/*
- * Globals
- */
 
 /* Links */
 a,
@@ -56,6 +54,8 @@ body {
   text-align: center;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
   box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+  font-family: 'Roboto-Light', sans-serif;
+  font-weight: 300
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -98,7 +98,7 @@ body {
   padding-right: 0;
   padding-left: 0;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: inherit;
   color: #fff; /* IE8 proofing */
   color: rgba(255,255,255,.75);
   border-bottom: 2px solid transparent;
@@ -134,7 +134,8 @@ body {
 }
 .cover .btn-lg {
   padding: 10px 20px;
-  font-weight: bold;
+  font-family: 'Roboto-Bold', sans-serif;
+  font-weight: 700;
 }
 
 

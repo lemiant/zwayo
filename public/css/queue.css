@@ -1,3 +1,30 @@
+/*
+ * Additions go here
+ */
+
+.tech {
+    font-family: 'Trench';
+    font-size: 44px;
+}
+.robo{
+  font-family: 'Roboto-Light', sans-serif;
+}
+.robo-big{
+    font-family: 'Roboto-Medium', sans-serif;
+}
+.logo {
+    display: inline-block;
+    padding-right: 15px;
+}
+.deselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .add-songs {
     padding: 15px;
     margin: 0 auto;
@@ -7,6 +34,10 @@
     text-align: center;
     display: inline-block;
 }
+.form-top {
+    display: inline-block;
+}
+
 
 .queue div.item{
     height: 60px;

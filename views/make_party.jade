@@ -17,7 +17,7 @@ html
                 new_secret_name()
                 $('#refresh').on('click', new_secret_name)
                 $('#go').on('click', function(){
-                    form = $('<form action="server/do_make_party.php" method="POST"><input type="hidden" name="secret_name" value="'+$('#secret_name').html()+'" /></form>');
+                    form = $('<form action="/api/add_party" method="GET"><input type="hidden" name="secret_name" value="'+$('#secret_name').html()+'" /></form>');
                     form.submit();
                 })
             })

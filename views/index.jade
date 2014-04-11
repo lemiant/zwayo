@@ -10,10 +10,7 @@ html
         #make_party.item.padded
             h2 Make a Party
             .extra
-                form(action="login.php", method="POST")
-                    input(type="hidden", name="action", value="make_party")
-                    input(type="hidden", name="party_name")
-                    a.button.submit Make Party
+                a.button.submit(href="/make_party") Make Party
                         
         #join_party.item.padded
             h2 Join a Party

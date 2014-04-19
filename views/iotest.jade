@@ -1,0 +1,45 @@
+html
+    head
+        script(src="/css/jquery.min.js")
+        script(src="/socket.io/socket.io.js")
+        style.
+            .bottom {
+                position: absolute;
+                bottom: 10px;
+            }
+            .bottom #msg{
+                width: 200px;
+            }
+    body
+        input#room(type="text")
+        input#join(type="submit" value="Join")
+        #output
+        .bottom
+            input#msg
+            input#send(type="submit" value="send")
+            
+        script.
+            out = $('#output')  
+            socket = io.connect('/')
+            $('#join').on('click', function(){
+                socket.emit( 'join', $('#room').val() )
+            })
+            $('#send').on('click', function(){
+                msg = $('#msg').val()
+                socket.emit('event', {'msg': msg})
+                $('#msg').val('')
+            })
+            
+            socket.on('connect', function(){
+                var start = new Date().getTime()
+                out.append("Connected...<br />")
+            });
+            
+            socket.on('event', function(data){
+                out.append('<div class="row">'+data.msg+'</div>')
+            });
+            
+            
+            
+            
+            

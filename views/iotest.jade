@@ -19,14 +19,15 @@ html
             input#send(type="submit" value="send")
             
         script.
-            out = $('#output')  
+            out = $('#output')
+            last = 0
             socket = io.connect('/')
             $('#join').on('click', function(){
-                socket.emit( 'join', $('#room').val() )
+                socket.emit( 'join', {'room': $('#room').val(), 'last': last} )
             })
             $('#send').on('click', function(){
                 msg = $('#msg').val()
-                socket.emit('event', {'msg': msg})
+                socket.emit('action', {'msg': msg})
                 $('#msg').val('')
             })
             
@@ -35,8 +36,13 @@ html
                 out.append("Connected...<br />")
             });
             
-            socket.on('event', function(data){
-                out.append('<div class="row">'+data.msg+'</div>')
+            socket.on('update', function(actions){
+                console.log(actions)
+                for(index in actions){
+                    action = actions[index]
+                    out.append('<div class="row">'+action.msg+'</div>')
+                    last = Math.max(last, action._id)
+                }
             });
             
             

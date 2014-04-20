@@ -47,6 +47,7 @@ var server = http.createServer(app),
     io = socketio.listen(server)
 
 api_ws(io)
+require('zw_api/ws_demo')(io)
 
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

@@ -16,7 +16,7 @@ html
 
         #queue.queue
             script(id="__queue_item_tmpl", type="text/html")
-                div.item(id="{{id}}")
+                div.item(id="{{_id}}")
                     img(src="{{body.thumb}}")
                     p.song_title {{body.title.ellipsis_truncate(60)}}
                     p.song_guest Added by {{body.guest.ellipsis_truncate(30)}}
@@ -57,35 +57,34 @@ html
             }
         }
 
+    script(src="/socket.io/socket.io.js")
+    script.
+        last = 0
+        socket = io.connect('/')
+        socket.on('connect', function(){
+            socket.emit('join', {party: 'spider_monkey', last: last})
+        })
+        socket.on('update', function(actions){ 
+            console.log(actions)
+            blocked_callback(['templating', 'jQuery', 'jQuery.fn.doubletap'], first_update)(actions) 
+        })
     script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
     //- Rendering Functions
     script.
-        last_update = 0
-        function get_queue_actions(){
-            $.ajax({
-                url: "server/get_queue_actions.php",
-                dataType: 'json',
-                type: 'post',
-                data: {last: last_update},
-                success: blocked_callback(['templating', 'jQuery.fn.doubletap'], make_queue) //Default 50ms refresh
-            })
-        }
-        function make_queue(){
+        function first_update(actions){
             window.queue_item_tmpl = _.template($('#__queue_item_tmpl').html());
-            update_queue.apply(this, arguments)
+            update(actions)
+            socket.removeListener('update', first_update)
+            socket.on('update', update)
         }
-        function update_queue(js, status){
-            if(status == "success" && js.result == "success"){
-                queue = $('#queue')
-                for(i=0; i<js.items.length; i++){
-                    apply(js.items[i], queue)
-                }
-                if(js.items.length > 0) last_update = js.items[js.items.length-1].id
+        function update(actions){
+            queue = $('#queue')
+            for(i=0; i<actions.length; i++){
+                apply(actions[i], queue)
             }
-            setTimeout(get_queue_actions, 2500)
+            if(actions.length > 0) last = actions.items[actions.length-1]._id
         }
         function apply(rule, list){
-            rule.body = $.parseJSON(rule.body)
             if(rule.action == 'add'){
                 tr = $(queue_item_tmpl(rule))
                 tr.data("videoId", rule.body.videoId)
@@ -102,13 +101,13 @@ html
             $('div#'+id).addClass('active')
         }
         function send_set_active(id){
-            $.ajax({
+            /*$.ajax({
                 url: 'server/set_queue_action.php',
                 type: 'post',
                 data: {action: 'set_active',
                         body: {active_id: id}}
             })
-            set_active(id)
+            set_active(id)*/
         }
 
         String.prototype.ellipsis_truncate = function(size){
@@ -117,8 +116,6 @@ html
             }
             return this
         }
-
-        get_queue_actions()
 
     script(src="js/jquery.doubletap.js")
     script(src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js")

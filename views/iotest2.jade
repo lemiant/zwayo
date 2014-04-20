@@ -11,24 +11,20 @@ html
                 width: 200px;
             }
     body
-        input#room(type="text")
         input#join(type="submit" value="Join")
         #output
         .bottom
-            input#msg
-            input#send(type="submit" value="send")
+            input#bind(type="submit" value="Bind")
             
         script.
             out = $('#output')
             last = 0
             socket = io.connect('/')
             $('#join').on('click', function(){
-                socket.emit( 'join2', {'room': $('#room').val(), 'last': last} )
+                socket.emit( 'ping', {'room': $('#room').val(), 'last': last} )
             })
-            $('#send').on('click', function(){
-                msg = $('#msg').val()
-                socket.emit('action2', {'msg': msg})
-                $('#msg').val('')
+            $('#bind').on('click', function(){
+                socket.on("ping", function(){ out.append("pingus") })
             })
             
             socket.on('connect', function(){

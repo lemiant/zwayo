@@ -55,13 +55,7 @@ function add_video_to_queue(){
     body.title = div.children('p.song_title').get(0).innerHTML
     body.thumb = div.children('img').get(0).src
     console.log(body)
-    $.ajax({
-        url: 'server/set_queue_action.php',
-        dataType: 'json',
-        type: 'post',
-        data: {action: 'add',
-            body: body}
-    })
+    socket.emit('action', {action: 'add', body: body})
     leave_search()
 }
     

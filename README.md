@@ -3,8 +3,5 @@ zwayo
 
 Zwayo moved to GitHub :)
 
-
-TODO: 
-1) delete everything
-2) try not to cry
-3) cry a lot
+This is the code that powers the live version of zwayo.
+All development is proceding on the node branch

@@ -64,7 +64,7 @@ function verify_login($con){
             }
         }
     }
-       return $USER_ID;
+    return $USER_ID;
 }
 
 function randomString($length = 10) {

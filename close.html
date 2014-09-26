@@ -1,0 +1,70 @@
+<html>
+    <body>
+        <style>
+    #search_bar{
+        width: 93%;
+        background-color: #f2f2f2;
+        color: black;
+        font-family: veranda, sans-serif;
+        font-size:15px;
+        border: 3px solid #111111;
+        border-radius: 20px;
+        margin: auto;
+        padding: 0 7px;
+        position: relative;
+        display: block;
+        z-index: 1;
+    }
+
+    body
+    {
+        background-color: #333333;
+    }
+    html, body{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    ul#autocomplete_list{
+        margin: -13px auto 0;
+        padding: 12px 0 0 0;
+        width: 90%;
+        background-color: #f2f2f2;
+        border-bottom: 1px solid #111111;
+        border-left: 1px solid #111111;
+        border-right: 1px solid #111111;
+        position: relative;
+        z-index: 0;
+    }
+    ul#autocomplete_list li{
+        width: 100%;
+        border-bottom: 1px solid #111111;
+        border-left: 1px solid #111111;
+        border-right: 1px solid #111111;
+        list-style-type: none;
+    }
+    ul#autocomplete_list p{
+        padding: 4px 4px;
+        margin: 0;
+    }
+    div#search_container{
+        height: 25px;
+        position: relative;
+        width: 90%;
+        margin: 10px auto;
+        display: block;
+    }
+    #search_wrapper .queue .item p.song_title{
+        color: #cccccc;
+        font-size: 13px;
+        margin: 3px;
+    }
+</style>
+
+<div id="search_container">
+    <input id="search_bar" type="text">
+    <ul id="autocomplete_list"></ul>
+</div>
+<div style="display: inline-block; position: absolute; top: 10px; right: 3%; background-color: grey; padding: 2px 4px; border: #444 solid 2px; cursor: pointer; font-family: Arial; font-size: 14px;" onclick="leave_search()">X</div>
+    </body>
+</html>

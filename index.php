@@ -9,7 +9,7 @@
     <div id="make_party" class="item padded">
        <h2 onclick="">Make a Party</h2>
             <div class="extra">
-                <form action="login.php" method="POST">
+                <form action="login_no_fb.php" method="POST">
                     <input type="hidden" name="action" value="make_party"/>
                     <input type="hidden" class="party_name rounded" name="party_name" placeholder="Your Party Name" /><br />
                     <a class="button submit" onclick="make_party(event)">Make Party</a>
@@ -20,7 +20,7 @@
     <div id="join_party" class="item padded open">
         <h2 onclick="">Join a Party</h2>
             <div class="extra" style="display: block;">
-                <form action="login.php" method="POST">
+                <form action="login_no_fb.php" method="POST">
                     <input type="hidden" name="action" value="join_party"/>
                     <input type="text" class="party_name rounded" name="party_name" placeholder="Secret Name" /><br />
                     <a class="button submit" onclick="join_party(event)">Let's Party!</a>

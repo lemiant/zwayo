@@ -91,11 +91,19 @@
             tr = $(queue_item_tmpl(rule))
             tr.data("videoId", rule.body.videoId)
             tr.doubletap(function(e){ play($(e.currentTarget)) }, function(){}, 400)
+			tr.on("contextmenu", function(e){
+				send_remove(rule.id);
+                                $('#'+rule.id).remove();
+				return false;
+			})
             list.prepend(tr)
         }
         else if(rule.action == 'set_active' && player_div.css('display') == 'none'){
             set_active(rule.body.active_id)
         }
+	else if(rule.action == 'remove'){
+	    $('#'+rule.body.id).remove();
+	}
     }
 
     function set_active(id){
@@ -111,6 +119,14 @@
         })
         set_active(id)
     }
+	function send_remove(id){
+        $.ajax({
+            url: 'server/set_queue_action.php',
+            type: 'post',
+            data: {action: 'remove',
+                    body: {id: id}}
+        })
+	}
 
     String.prototype.ellipsis_truncate = function(size){
         if(this.length > size){
@@ -142,7 +158,52 @@
   tag.src = "https://www.youtube.com/iframe_api";
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  
+  $(document).keydown(function(e) {
+    switch(e.which) {
+        case 32: //space
+        togglePlay();
+        break;
+
+        case 37: // left
+        playPrev();
+        break;
+
+        case 39: // right
+        playNext();
+        break;
+
+        default: return;
+    }
+    e.preventDefault();
+  })
+
+    function playNext() {
+        if(player_div.prevAll('.item').length >= 2){
+            play(player_div.prevAll('.item')[1])
+        } else {
+            play($('#queue .item').not('#player_div').last())
+        }
+    }
     
+    function playPrev() {
+        if(player_div.nextAll('.item').length >= 1){
+            play(player_div.nextAll('.item')[0])
+        } else {
+            play($('#queue .item').not('#player_div').first())
+        }
+    }
+
+    function togglePlay() {
+        if (!player_div.is(':visible')) {
+            play($('#queue .item').not(player_div).last());
+        } else if (player.getPlayerState() === 1) {
+            player.pauseVideo();
+        } else {
+            player.playVideo();
+        }
+    }
+ 
     function play(t){
         place_after(t)
         play_above()
@@ -181,21 +242,13 @@
     function onPlayerReady(e){
         $('#play_button_div').show()
         $('#play').on('click', function(){ 
-            place_after($('#queue .item').not(player_div).last())
-            play_above() 
+            play($('#queue .item').not(player_div).last())
         })
         if(player_div.css('display') != 'none') play_above(); //We tried to play a song without the YoutubeAPI
     }
     function onPlayerStateChange(e){
         if(e.data == 0){
-            console.log(player_div.prevAll('.item'))
-            if(player_div.prevAll('.item').length >= 2){
-                place_after(player_div.prevAll('.item')[1])
-                play_above()
-            }
-            else{
-                play($('#queue .item').not('#player_div').last())
-            }
+           playNext();
         }
     } 
 </script>
